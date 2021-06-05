@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" integrity="sha384-
+ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="/css/jumbotron-narrow.css" rel="stylesheet">
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<div class="container">
+    <div style="margin:10px">
+    <p>안녕하세요. 손님</p>
+
+    <input type="text" id="keyword" name="name" placeholder="영화제목을 입력하세요">
+    <button type="button" class="btn btn-info" id="btn-movies-search">검색</button>
+    <button type="button" class="btn btn-info" id="btn-movies-save">영화 추천하기</button>
+    </div>
+    <div id = "list">
+        <table class="table table-striped">
+            <tr>
+                <td></td>
+                <td>제목</td>
+                <td>감독</td>
+                <td>등급</td>
+                <td style="display:none;">링크</td>
+                <td>ID</td>
+                <td>이미지</td>
+            </tr>
+            <tr th:each="movie : ${movieItems}">
+                <td><input type="checkbox" th:onclick="popup([[${movie}]]);" th:object="${movie}" name="checkedOne"></td>
+                <td th:text="${movie.title}"></td>
+                <td th:text="${movie.director}"></td>
+                <td th:text="${movie.userRating}"></td>
+                <td style="display:none;" th:text="${movie.link}"></td>
+                <td th:text="${movie.movieId}"></td>
+                <td>
+                    <img th:src="@{${movie.image}}" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+/*<![CDATA[*/
+$(function () {
+    $('#btn-movies-search').on('click', function () {
+                var keyword = $('#keyword').val();
+                       $.ajax({
+                           type: 'GET',
+                           url: '/movies/'+keyword
+                           //dataType: 'json'
+                           //contentType:'application/json; charset=utf-8',
+                           }).done(function(res) {
+                           $("#list").replaceWith(res);
+                          // alert(JSON.stringify(res));
+                           }).fail(function (error) {
+                           alert(JSON.stringify(error));
+                           });
+            });
+
+  });
+
+/*]]>*/
+</script>
+</th:block>
+</html>
+
