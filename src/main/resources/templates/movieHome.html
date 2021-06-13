@@ -19,7 +19,6 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 
     <input type="text" id="keyword" name="name" placeholder="영화제목을 입력하세요">
     <button type="button" class="btn btn-info" id="btn-movies-search">검색</button>
-    <button type="button" class="btn btn-info" id="btn-movies-save">영화 추천하기</button>
     </div>
     <div id = "list">
         <table class="table table-striped">
@@ -33,7 +32,11 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
                 <td>이미지</td>
             </tr>
             <tr th:each="movie : ${movieItems}">
-                <td><input type="checkbox" th:onclick="popup([[${movie}]]);" th:object="${movie}" name="checkedOne"></td>
+                <td>
+                    <a th:href="@{'/movies/recoNew?movieTitle=' + ${movie.title}
+                                    + '&movieDirector=' + ${movie.director}}">
+                    <span>추천하기</span>
+                </a></td>
                 <td th:text="${movie.title}"></td>
                 <td th:text="${movie.director}"></td>
                 <td th:text="${movie.userRating}"></td>
