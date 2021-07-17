@@ -13,6 +13,15 @@ spring:
         #        show_sql: true
         format_sql: true
 
+#server:
+#  ssl:
+#    enable: true
+#    key-store: keystore.p12
+#    key-store-password: 123456
+#    key-store-type: PKCS12
+#    key-alias: bns-ssl
+#  port: 8443
+
 line:
   user:
     id: U0727eec495684a7762cd62f93b0c57cb
