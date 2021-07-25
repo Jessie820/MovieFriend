@@ -24,7 +24,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
 
     @Override
     protected void configure(HttpSecurity http) throws Exception { // 5
-        http.csrf().disable()
+        http
+                //.csrf().disable() is commented because i dont want disable this kind of protection
                 .authorizeRequests() // 6
                 .antMatchers("/login", "/signup", "/user", "/movies").permitAll() // 누구나 접근 허용
                 .antMatchers("/").hasRole("USER") // USER, ADMIN만 접근 가능

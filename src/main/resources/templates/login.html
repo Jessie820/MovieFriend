@@ -12,6 +12,9 @@
     <label for="password">Password</label>:
     <input type="password" id="password" name="password" /> <br />
     <button type="submit">로그인</button>
+    <input type="hidden"
+           th:name="${_csrf.parameterName}"
+           th:value="${_csrf.token}" />
 </form>
 </body>
 </html>
