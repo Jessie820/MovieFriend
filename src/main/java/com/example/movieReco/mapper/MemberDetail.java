@@ -13,8 +13,7 @@ public class MemberDetail implements UserDetails {
     private String email;
     private String password;
     private String auth;
-    private String nickname;
-    private int age;
+    private String birthDate;
     private String gender;
 
     public MemberDetail(){
@@ -27,20 +26,20 @@ public class MemberDetail implements UserDetails {
         this.auth = "ROLE_" + member.getAuth();
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getAuth() {
+        return auth;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setAuth(String auth) {
+        this.auth = auth;
     }
 
-    public int getAge() {
-        return age;
+    public String getBirthDate() {
+        return birthDate;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getGender() {

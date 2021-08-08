@@ -1,21 +1,20 @@
 package com.example.movieReco.domain;
 
-import com.example.movieReco.mapper.NaverMovie;
 import com.example.movieReco.mapper.NaverMovieItem;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 @Getter @Setter
 public class Movie {
     @Id
+    @Column(name = "MOVIE_ID")
     private String MovieId;
 
-    @Column(name = "MovieTitle")
+    @Column(name = "MOVIE_TITLE")
     private String MovieTitle;
 
     @Column(name = "Director")
@@ -27,6 +26,8 @@ public class Movie {
     @Column(name = "Rating")
     private float Rating;
 
+    private String image;
+
     @Column(name = "RecommendCnt")
     private int RecommendCnt;
 
@@ -36,9 +37,9 @@ public class Movie {
         movie.setMovieTitle(nm.getTitle());
         movie.setDirector(nm.getDirector());
         movie.setRating(nm.getUserRating());
+        movie.setImage(nm.getImage());
         movie.setRecommendCnt(1);
         movie.setReleaseDate(nm.getPubDate());
         return movie;
     }
-
 }

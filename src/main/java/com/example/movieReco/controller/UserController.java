@@ -38,8 +38,7 @@ public class UserController {
     public String signUp(MemberDetail memberDetail, BindingResult result){
         System.out.println("join process");
         Member member = new Member();
-        member.setNickname(memberDetail.getNickname());
-        member.setAge(memberDetail.getAge());
+        member.setBirthDate(memberDetail.getBirthDate());
         member.setGender(memberDetail.getGender());
         member.setEmail(memberDetail.getUsername());
         member.setPassword(memberDetail.getPassword());

@@ -8,7 +8,7 @@
 <body>
 <form role="form" action="/signup" th:object="${memberDetail}" method="post">
     이름 : <input type="text" th:field="*{nickname}" name="nickname">
-    나이 : <input type="text" th:field="*{age}" name="age">
+    나이 : <input type="text" th:field="*{birthDate}" name="birthDate">
     성별:  <input type="text" th:field="*{gender}" name="gender">
     email : <input type="email" th:field="*{email}" name="email">
     password : <input type="password" th:field="*{password}"  name="password">
