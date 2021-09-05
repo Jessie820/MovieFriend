@@ -16,23 +16,28 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 
 <div class="container">
     <div style="margin:10px">
-    <p>안녕하세요. 손님</p>
+        <p>여긴 추천 내역입니다.</p>
 
-    <input type="text" id="keyword" name="name" placeholder="영화제목을 입력하세요">
-    <button type="button" class="btn btn-info" id="btn-movies-search">검색</button>
+        <input type="text" id="keyword" name="name" placeholder="영화제목을 입력하세요">
+        <button type="button" class="btn btn-info" id="btn-movies-search">검색</button>
     </div>
     <div id = "list">
         <table class="table table-striped">
             <tr>
+                <td></td>
                 <td>제목</td>
                 <td>감독</td>
-                <td>평점</td>
+                <td>등급</td>
                 <td style="display:none;">링크</td>
                 <td>ID</td>
                 <td>이미지</td>
-                <td>추천</td>
             </tr>
             <tr th:each="movie : ${movieItems}">
+                <td>
+                    <a th:href="@{'/movies/recoNew?movieTitle=' + ${movie.title}
+                                    + '&movieDirector=' + ${movie.director}}">
+                        <span>추천하기</span>
+                    </a></td>
                 <td th:text="${movie.title}"></td>
                 <td th:text="${movie.director}"></td>
                 <td th:text="${movie.userRating}"></td>
@@ -41,20 +46,6 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
                 <td>
                     <img th:src="@{${movie.image}}" />
                 </td>
-                    <td>
-                        <form th:action="@{'/movies/recoNew'}" th:object="${recoDetail}" th:method="POST">
-                            <input th:name="title" th:value="${movie.title}" type="hidden"/>
-                            <input th:name="director" th:value="${movie.director}" type="hidden"/>
-                            <input th:name="userRating" th:value="${movie.userRating}" type="hidden"/>
-                            <input th:name="link" th:value="${movie.link}" type="hidden"/>
-                            <input th:name="imageLink" th:value="${movie.image}" type="hidden"/>
-                            <input th:name="movieId" th:value="${movie.movieId}" type="hidden"/>
-                        <button type="submit">추천하기</button>
-                        <input type="hidden"
-                               th:name="${_csrf.parameterName}"
-                               th:value="${_csrf.token}" />
-                        </form>
-                    </td>
             </tr>
         </table>
     </div>

@@ -1,5 +1,6 @@
 package com.example.movieReco.domain;
 
+import com.example.movieReco.controller.MovieRecommendForm;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,5 +26,6 @@ public class Recommendation {
     private String recipientName;
     private Long recipientId;
     private String recipientEmail;
+
 
 }

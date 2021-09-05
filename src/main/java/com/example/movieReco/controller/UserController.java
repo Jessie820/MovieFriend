@@ -30,7 +30,6 @@ public class UserController {
 
     @GetMapping(value = "/login")
     public String loginForm(){
-        System.out.println("login form");
         return "login";
     }
 

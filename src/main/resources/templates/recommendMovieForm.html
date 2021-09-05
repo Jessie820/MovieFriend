@@ -16,27 +16,45 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 </style>
 <body>
 <div class="container">
-    <form role="form" action="movies/recommendMovieForm" th:object="${MovieRecommendForm}"
+    <form role="form" action="/movies/recommendMovie" th:object="${movieRecommendForm}"
           method="post">
         <div class="form-group">
             <label th:for="name">영화제목</label>
-            <div th:text="${title}" class="form-control"></div>
+            <div th:text="${movieRecommendForm.title}" class="form-control"></div>
         </div>
         <br/>
         <div class="form-group">
-            <label th:for="city">영화감독</label>
-            <div th:text="${director}" class="form-control"></div>
+            <label th:for="director">영화감독</label>
+            <div th:text="${movieRecommendForm.director}" class="form-control"></div>
         </div>
         <br/>
         <div class="form-group">
-            <label th:for="city">추천이유</label>
-            <input type="text" th:field="*{comment}" class="form-control"
+            <label th:for="comment">추천이유</label>
+            <input type="text" th:text="${movieRecommendForm.comment}" class="form-control"
                    placeholder="추천이유를 입력하세요">
         </div>
         <br/>
+        <div class="form-group">
+            <label th:for="recipientName">추천자</label>
+            <input type="text" th:text="${movieRecommendForm.recipientName}" class="form-control"
+                   placeholder="추천해주고 싶은 사람을 입력하세요">
+        </div>
+        <br/>
+        <div class="form-group">
+         <!--   <label th:for="image">영화포스터</label>-->
+            <img th:src="@{${movieRecommendForm.imageLink}}" />
+<!--            <div th:text="${movieRecommendForm.image}" class="form-control"></div>-->
+        </div>
+        <br/>
+        <div class="form-group" style="display:none;">
+            <label th:for="movieId">영화아이디</label>
+            <div th:text="${movieRecommendForm.movieId}" class="form-control"></div>
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
+        <input type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}" />
     </form>
-    <br/>
 </div> <!-- /container -->
 </body>
 </html>

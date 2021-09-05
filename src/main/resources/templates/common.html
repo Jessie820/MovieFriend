@@ -4,7 +4,7 @@
 
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" th:fragment="menu">
-    <a class="navbar-brand" href="#">Spring boot Service</a>
+    <a class="navbar-brand" href="#"> 영화 추천해주는 친구 </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -13,11 +13,11 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item" th:classappend="${menu} == 'home'? 'active'">
-                <a class="nav-link" href="#" th:href="@{/}">홈 <span class="sr-only"
+                <a class="nav-link" href="#" th:href="@{/movies}">영화검색 <span class="sr-only"
                                                                     th:if="${menu} == 'home'">(current)</span></a>
             </li>
             <li class="nav-item" th:classappend="${menu} == 'board'? 'active'">
-                <a class="nav-link" href="#" th:href="@{/movies}">게시판 <span class="sr-only"
+                <a class="nav-link" href="#" th:href="@{/movies}">나의 추천함<span class="sr-only"
                                                                                 th:if="${menu} == 'board'">(current)</span></a>
             </li>
         </ul>
