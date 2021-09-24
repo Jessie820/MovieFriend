@@ -13,68 +13,85 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 <nav th:replace="common :: menu"></nav>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <div class="container">
     <div style="margin:10px">
-        <p>여긴 추천 내역입니다.</p>
-
-        <input type="text" id="keyword" name="name" placeholder="영화제목을 입력하세요">
-        <button type="button" class="btn btn-info" id="btn-movies-search">검색</button>
+        <p>영화추천 내역입니다.</p>
     </div>
-    <div id = "list">
-        <table class="table table-striped">
-            <tr>
-                <td></td>
-                <td>제목</td>
-                <td>감독</td>
-                <td>등급</td>
-                <td style="display:none;">링크</td>
-                <td>ID</td>
-                <td>이미지</td>
-            </tr>
-            <tr th:each="movie : ${movieItems}">
-                <td>
-                    <a th:href="@{'/movies/recoNew?movieTitle=' + ${movie.title}
-                                    + '&movieDirector=' + ${movie.director}}">
-                        <span>추천하기</span>
-                    </a></td>
-                <td th:text="${movie.title}"></td>
-                <td th:text="${movie.director}"></td>
-                <td th:text="${movie.userRating}"></td>
-                <td style="display:none;" th:text="${movie.link}"></td>
-                <td th:text="${movie.movieId}"></td>
-                <td>
-                    <img th:src="@{${movie.image}}" />
-                </td>
-            </tr>
-        </table>
+    <div class="container" th:object="${recoSaved}">
+            <div class="form-group">
+                <label th:for="name">영화제목</label>
+                <div th:text="${recoSaved.title}" class="form-control"></div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label th:for="director">영화감독</label>
+                <div th:text="${recoSaved.director}" class="form-control"></div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label th:for="comment">추천이유</label>
+                <div th:text="${recoSaved.comment}" class="form-control"></div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <!--   <label th:for="image">영화포스터</label>-->
+                <img th:src="@{${recoSaved.imageLink}}" />
+                <input th:name="imageLink" th:value="${recoSaved.imageLink}" type="hidden"/>
+                <!--            <div th:text="${movieRecommendForm.image}" class="form-control"></div>-->
+            </div>
+            <br/>
+        <a id="create-kakao-link-btn" href="javascript:;">
+            <img
+                    src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"
+            />
+        </a>
     </div>
 </div>
-</body>
 <!-- 사용자 스크립트 추가 -->
-<th:block layout:fragment="script">
-    <script th:inline="javascript">
-/*<![CDATA[*/
-$(function () {
-    $('#btn-movies-search').on('click', function () {
-                var keyword = $('#keyword').val();
-                       $.ajax({
-                           type: 'GET',
-                           url: '/movies/'+keyword
-                           //dataType: 'json'
-                           //contentType:'application/json; charset=utf-8',
-                           }).done(function(res) {
-                           $("#list").replaceWith(res);
-                          // alert(JSON.stringify(res));
-                           }).fail(function (error) {
-                           alert(JSON.stringify(error));
-                           });
-            });
+<script type="text/javascript">
+    // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init('f42087373264b2b498315167f788b5d5');
 
-  });
+    // SDK 초기화 여부를 판단합니다.
+    console.log(Kakao.isInitialized());
 
-/*]]>*/
+  Kakao.Link.createDefaultButton({
+    container: '#create-kakao-link-btn',
+    objectType: 'feed',
+    content: {
+      title: '영화 친구',
+      description: '#영화추천',
+      imageUrl:
+        '[[${recoSaved.imageLink}]]',
+      link: {
+        mobileWebUrl: window.location.href,
+        webUrl: window.location.href,
+      },
+    },
+    social: {
+      likeCount: 286,
+      commentCount: 45,
+      sharedCount: 845,
+    },
+    buttons: [
+      {
+        title: '웹으로 보기',
+        link: {
+          mobileWebUrl: window.location.href,
+          webUrl: window.location.href,
+        },
+      },
+      {
+        title: '앱으로 보기',
+        link: {
+          mobileWebUrl: window.location.href,
+          webUrl: window.location.href
+        },
+      },
+    ],
+  })
 </script>
-</th:block>
+</body>
 </html>
 

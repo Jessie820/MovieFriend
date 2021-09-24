@@ -4,15 +4,21 @@ import com.example.movieReco.domain.Recommendation;
 import com.example.movieReco.repository.RecommendRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class RecommendService {
 
-    private RecommendRepository recommendRepository;
+    private final RecommendRepository recommendRepository;
 
-    public void save(Recommendation recommendation){
-        recommendRepository.save(recommendation);
+    public Long save(Recommendation recommendation){
+        Long id = recommendRepository.save(recommendation);
+        return id;
+    }
+
+    public Recommendation find(Long id){
+        return recommendRepository.find(id);
     }
 
 

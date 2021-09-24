@@ -9,6 +9,7 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
     <!-- Custom styles for this template -->
     <link href="/css/jumbotron-narrow.css" rel="stylesheet">
 </head>
+<nav th:replace="common :: menu"></nav>
 <style>
  .fieldError {
  border-color: #bd2130;
@@ -21,34 +22,38 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
         <div class="form-group">
             <label th:for="name">영화제목</label>
             <div th:text="${movieRecommendForm.title}" class="form-control"></div>
+            <input th:name="title" th:value="${movieRecommendForm.title}" type="hidden"/>
         </div>
         <br/>
         <div class="form-group">
             <label th:for="director">영화감독</label>
             <div th:text="${movieRecommendForm.director}" class="form-control"></div>
+            <input th:name="director" th:value="${movieRecommendForm.director}" type="hidden"/>
         </div>
         <br/>
         <div class="form-group">
             <label th:for="comment">추천이유</label>
-            <input type="text" th:text="${movieRecommendForm.comment}" class="form-control"
+            <input type="text" th:name="comment" th:value="${movieRecommendForm.comment}" th:text="${movieRecommendForm.comment}"  class="form-control"
                    placeholder="추천이유를 입력하세요">
         </div>
         <br/>
         <div class="form-group">
             <label th:for="recipientName">추천자</label>
-            <input type="text" th:text="${movieRecommendForm.recipientName}" class="form-control"
+            <input type="text" th:name="recipientName" th:value="${movieRecommendForm.recipientName}" th:text="${movieRecommendForm.recipientName}" class="form-control"
                    placeholder="추천해주고 싶은 사람을 입력하세요">
         </div>
         <br/>
         <div class="form-group">
          <!--   <label th:for="image">영화포스터</label>-->
             <img th:src="@{${movieRecommendForm.imageLink}}" />
+            <input th:name="imageLink" th:value="${movieRecommendForm.imageLink}" type="hidden"/>
 <!--            <div th:text="${movieRecommendForm.image}" class="form-control"></div>-->
         </div>
         <br/>
         <div class="form-group" style="display:none;">
             <label th:for="movieId">영화아이디</label>
-            <div th:text="${movieRecommendForm.movieId}" class="form-control"></div>
+<!--            <div th:text="${movieRecommendForm.movieId}"  class="form-control"></div>-->
+            <input th:name="movieId" th:value="${movieRecommendForm.movieId}" type="hidden"/>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
         <input type="hidden"

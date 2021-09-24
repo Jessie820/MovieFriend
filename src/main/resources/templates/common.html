@@ -22,6 +22,7 @@
             </li>
         </ul>
         <a class="btn btn-secondary mr-2 my-2 my-sm-0" th:href="@{/signup}" sec:authorize="!isAuthenticated()">register</a>
+     &nbsp;
         <a class="btn btn-secondary my-2 my-sm-0" th:href="@{/login}" sec:authorize="!isAuthenticated()">login</a> <!-- 로그인이 안된 경우  -->
 
         <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
