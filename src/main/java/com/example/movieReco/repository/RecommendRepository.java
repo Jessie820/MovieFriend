@@ -36,4 +36,15 @@ public class RecommendRepository {
         return em.find(Recommendation.class, id);
     }
 
+    public Recommendation findRecommendation(Long id){
+        TypedQuery<Recommendation> query1
+                =  em.createQuery("select r from Recommendation r" +
+                " join fetch r.movie m" +
+                " join fetch r.member me" +
+                " where r.id = :rId"
+                , Recommendation.class);
+        query1.setParameter("rId",id);
+        return query1.getSingleResult();
+    }
+
 }

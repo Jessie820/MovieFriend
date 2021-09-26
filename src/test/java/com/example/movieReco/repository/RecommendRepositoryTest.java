@@ -41,8 +41,8 @@ class RecommendRepositoryTest {
         memberRepository.save(member);
 
         Movie movie = new Movie();
-        movie.setMovieId("123456");
-        movie.setMovieTitle("행복한 영화");
+        movie.setId("123456");
+        movie.setTitle("행복한 영화");
         movie.setDirector("냥냥이");
         movieRepository.save(movie);
 

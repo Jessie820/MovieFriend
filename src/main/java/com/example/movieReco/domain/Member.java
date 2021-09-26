@@ -1,5 +1,6 @@
 package com.example.movieReco.domain;
 
+import com.example.movieReco.mapper.MemberDetail;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,4 +26,14 @@ public class Member {
     private String password;
     private String auth;
 
+    public static Member createMember(MemberDetail memberDetail){
+        Member member = new Member();
+        member.setId(memberDetail.getMemberId());
+        member.setEmail(memberDetail.getEmail());
+        member.setBirthDate(memberDetail.getBirthDate());
+        member.setGender(memberDetail.getGender());
+        member.setPassword(memberDetail.getPassword());
+        member.setAuth(memberDetail.getAuth());
+        return member;
+    }
 }

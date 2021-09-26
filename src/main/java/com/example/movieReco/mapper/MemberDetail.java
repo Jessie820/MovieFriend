@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class MemberDetail implements UserDetails {
+    private Long memberId;
     private String email;
     private String password;
     private String auth;
@@ -21,9 +22,18 @@ public class MemberDetail implements UserDetails {
     }
 
     public MemberDetail(Member member){
+        this.memberId = member.getId();
         this.email = member.getEmail();
         this.password = member.getPassword();
         this.auth = "ROLE_" + member.getAuth();
+    }
+
+    public Long getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
     }
 
     public String getAuth() {

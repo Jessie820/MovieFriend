@@ -11,31 +11,31 @@ import javax.persistence.*;
 public class Movie {
     @Id
     @Column(name = "MOVIE_ID")
-    private String MovieId;
+    private String id;
 
     @Column(name = "MOVIE_TITLE")
-    private String MovieTitle;
+    private String title;
 
-    @Column(name = "Director")
-    private String Director;
+    @Column(name = "DIRECTOR")
+    private String director;
     
-    private String ReleaseDate;
+    private String releaseDate;
 
-    @Column(name = "Rating")
-    private float Rating;
+    @Column(name = "RATING")
+    private float rating;
 
-    private String image;
+    private String imageLink;
 
-    @Column(name = "RecommendCnt")
-    private int RecommendCnt;
+    @Column(name = "RECOMMEND_CNT")
+    private int recommendCnt;
 
     public static Movie createMovie(MovieRecommendForm mrf) {
         Movie movie = new Movie();
-        movie.setMovieId(mrf.getMovieId());
-        movie.setMovieTitle(mrf.getTitle());
+        movie.setId(mrf.getMovieId());
+        movie.setTitle(mrf.getTitle());
         movie.setDirector(mrf.getDirector());
         movie.setRating(mrf.getUserRating());
-        movie.setImage(mrf.getImageLink());
+        movie.setImageLink(mrf.getImageLink());
         movie.setRecommendCnt(1);
         movie.setReleaseDate(mrf.getReleasesDate());
         return movie;

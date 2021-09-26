@@ -21,7 +21,9 @@ public class RecommendService {
         return recommendRepository.find(id);
     }
 
-
+    public Recommendation findRecommendation(Long id){
+        return recommendRepository.findRecommendation(id);
+    }
 
 
 }

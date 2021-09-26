@@ -1,7 +1,9 @@
 package com.example.movieReco.controller;
 
+import com.example.movieReco.domain.Member;
 import com.example.movieReco.domain.Movie;
 import com.example.movieReco.domain.Recommendation;
+import com.example.movieReco.mapper.MemberDetail;
 import com.example.movieReco.mapper.NaverMovieItem;
 import com.example.movieReco.mapper.RecoDetail;
 import com.example.movieReco.mapper.RecoSaved;
@@ -13,6 +15,7 @@ import com.example.movieReco.service.RecommendService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -77,11 +80,14 @@ public class MovieController {
 //    }
 
     @PostMapping(value = "movies/recommendMovie")
-    public String recommendMovie(@ModelAttribute("movieRecommendForm") MovieRecommendForm movieRecommendForm ){
+    public String recommendMovie(@ModelAttribute("movieRecommendForm") MovieRecommendForm movieRecommendForm
+                                    ,Authentication authentication){
         Movie movie = Movie.createMovie(movieRecommendForm);
         movieService.saveMovie(movie);
 
-        Long recoId = saveRecommendation(movieRecommendForm, movie);
+        MemberDetail memberDetail = (MemberDetail)authentication.getPrincipal();
+        Member member = Member.createMember(memberDetail);
+        Long recoId = saveRecommendation(movieRecommendForm, movie, member);
         String recommendView = "redirect:/recommendList/";
 
         return (recommendView + recoId);
@@ -89,19 +95,15 @@ public class MovieController {
 
     @GetMapping("/recommendList/{recoId}")
     public String recommendList(Model model, @PathVariable Long recoId){
-        Recommendation recommendation = recommendService.find(recoId);
-        RecoSaved recoSaved = new RecoSaved();
-        recoSaved.setTitle(recommendation.getMovie().getMovieTitle());
-        recoSaved.setDirector(recommendation.getMovie().getDirector());
-        recoSaved.setComment(recommendation.getComment());
-        recoSaved.setImageLink(recommendation.getMovie().getImage());
+        Recommendation recommendation = recommendService.findRecommendation(recoId);
+        RecoSaved recoSaved = new RecoSaved(recommendation);
         model.addAttribute("recoSaved", recoSaved);
         return "recommendList";
     }
 
-
-    public Long saveRecommendation(MovieRecommendForm mrf, Movie movie){
+    public Long saveRecommendation(MovieRecommendForm mrf, Movie movie, Member member){
         Recommendation recommendation = new Recommendation();
+        recommendation.setMember(member);
         recommendation.setRecipientName(mrf.getRecipientName());
         recommendation.setComment(mrf.getComment());
         recommendation.setMovie(movie);

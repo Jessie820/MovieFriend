@@ -1,9 +1,6 @@
 package com.example.movieReco.service;
 
-import com.example.movieReco.controller.MovieRecommendForm;
 import com.example.movieReco.domain.Movie;
-import com.example.movieReco.mapper.NaverMovie;
-import com.example.movieReco.mapper.NaverMovieItem;
 import com.example.movieReco.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +14,7 @@ public class MovieService {
 
     public String saveMovie(Movie movie){
         movieRepository.save(movie);
-        return movie.getMovieId();
+        return movie.getId();
     }
 
 

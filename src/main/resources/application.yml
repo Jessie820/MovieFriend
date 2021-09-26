@@ -8,10 +8,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+      use-new-id-generator-mappings: false
     properties:
       hibernate:
-        #        show_sql: true
+#        show_sql: true
         format_sql: true
+
 
 #server:
 #  ssl:
@@ -27,7 +29,8 @@ line:
     id: U0727eec495684a7762cd62f93b0c57cb
   channel:
     token: U9zlegJyS/D2gbiPKj2H1xOpm4ZiJ80izi8Dxb5ynEIwisTfFZkUEuE9MCfaoSmYL0/HyttFEveXKoW4fA3p0CaYwFWZusiv5pU4jR6s18v/diuzt8pxJlNGTw26piYK4NIBvr6jD1BSyawEytj9DgdB04t89/1O/w1cDnyilFU=
-#logging:
-#  level:
-#    org.hibernate.SQL: debug
-#    org.hibernate.type: trace
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace

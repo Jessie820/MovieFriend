@@ -18,7 +18,7 @@ public class Recommendation {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MOVIE_ID")
     private Movie movie;
 
@@ -26,6 +26,5 @@ public class Recommendation {
     private String recipientName;
     private Long recipientId;
     private String recipientEmail;
-
 
 }

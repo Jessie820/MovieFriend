@@ -21,12 +21,12 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
     <div class="container" th:object="${recoSaved}">
             <div class="form-group">
                 <label th:for="name">영화제목</label>
-                <div th:text="${recoSaved.title}" class="form-control"></div>
+                <div th:text="${recoSaved.movie?.title}" class="form-control"></div>
             </div>
             <br/>
             <div class="form-group">
                 <label th:for="director">영화감독</label>
-                <div th:text="${recoSaved.director}" class="form-control"></div>
+                <div th:text="${recoSaved.movie?.director}" class="form-control"></div>
             </div>
             <br/>
             <div class="form-group">
@@ -35,10 +35,13 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
             </div>
             <br/>
             <div class="form-group">
+                <label th:for="comment">추천한 사람</label>
+                <div th:text="${recoSaved.recommender?.email}" class="form-control"></div>
+            </div>
+            <br/>
+            <div class="form-group">
                 <!--   <label th:for="image">영화포스터</label>-->
-                <img th:src="@{${recoSaved.imageLink}}" />
-                <input th:name="imageLink" th:value="${recoSaved.imageLink}" type="hidden"/>
-                <!--            <div th:text="${movieRecommendForm.image}" class="form-control"></div>-->
+                <img th:src="@{${recoSaved.movie?.imageLink}}" />
             </div>
             <br/>
         <a id="create-kakao-link-btn" href="javascript:;">
@@ -63,7 +66,7 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       title: '영화 친구',
       description: '#영화추천',
       imageUrl:
-        '[[${recoSaved.imageLink}]]',
+        '[[${recoSaved.movie?.imageLink}]]',
       link: {
         mobileWebUrl: window.location.href,
         webUrl: window.location.href,
