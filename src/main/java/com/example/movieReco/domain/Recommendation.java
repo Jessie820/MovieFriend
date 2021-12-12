@@ -22,6 +22,8 @@ public class Recommendation {
     @JoinColumn(name = "MOVIE_ID")
     private Movie movie;
 
+    private long userCredit;
+
     private String comment;
     private String recipientName;
     private Long recipientId;

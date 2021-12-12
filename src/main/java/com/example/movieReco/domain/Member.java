@@ -22,6 +22,8 @@ public class Member {
     private String birthDate;
     private String gender;
 
+    private long credit;
+
     @Column(nullable = false)
     private String password;
     private String auth;

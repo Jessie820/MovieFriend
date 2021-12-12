@@ -107,7 +107,7 @@ public class MovieController {
         recommendation.setRecipientName(mrf.getRecipientName());
         recommendation.setComment(mrf.getComment());
         recommendation.setMovie(movie);
-        Long id = recommendRepository.save(recommendation);
+        Long id = recommendService.save(member, recommendation);
         return id;
     }
 

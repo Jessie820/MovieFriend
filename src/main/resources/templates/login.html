@@ -2,19 +2,55 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" integrity="sha384-
+ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link href="/css/moviereco-basic.css" rel="stylesheet">
+    <style>
+        .title-part{
+            display: block;
+        }
+        .title-text{
+            font-family: fantasy;
+            font-size: 250%;
+            font-weight: bold;
+        }
+
+
+    </style>
 </head>
 <body>
-<h1>Login page</h1>
-<p th:if="${loginError}" class="error">Wrong user or password</p>
-<form action="/login" method="post">
-    <label for="username">Username</label>:
-    <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
-    <label for="password">Password</label>:
-    <input type="password" id="password" name="password" /> <br />
-    <button type="submit">로그인</button>
-    <input type="hidden"
-           th:name="${_csrf.parameterName}"
-           th:value="${_csrf.token}" />
-</form>
+ <div class = "movie-layer">
+    <span class="movie-wrapper">
+        <div class="title-part">
+        <p class="title-text">Movie Friend</p>
+        </div>
+    <p th:if="${loginError}" class="error">Wrong user or password</p>
+    <form action="/login" method="post">
+        <div class="up-part">
+            <label for="username">Username</label>:
+            <input type="text" id="username" name="username" autofocus="autofocus" style="margin:10px"/> <br />
+            <label for="password">Password</label>:
+            <input type="password" id="password" name="password" style="margin:0px 0px 10px 7px"/> <br />
+        </div>
+        <div class="down-part">
+            <div class="left-box"></div>
+            <div class="right-box">
+                <button type="submit">로그인</button>
+                <input type="hidden"
+                       th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}" />
+<!--                <button th:onclick="'location.href=\''+ @{${signup}} + '\''">회원가입</button>-->
+                <a th:href="@{/signup}">회원가입</a>
+            </div>
+        </div>
+    </form>
+        <br />
+    <div class="bottom-part">
+        <a th:href="@{/movies}">로그인 없이 바로 영화를 추천해보세요!</a>
+    </div>
+    </span>
+ </div>
 </body>
 </html>

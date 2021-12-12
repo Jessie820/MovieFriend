@@ -3,18 +3,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" integrity="sha384-
+ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link href="/css/moviereco-basic.css" rel="stylesheet">
 </head>
+<nav th:replace="common :: menu"></nav>
 <body>
-<form role="form" action="/signup" th:object="${memberDetail}" method="post">
-    나이 : <input type="text" th:field="*{birthDate}" name="birthDate">
-    성별:  <input type="text" th:field="*{gender}" name="gender">
-    email : <input type="email" th:field="*{email}" name="email">
-    password : <input type="password" th:field="*{password}"  name="password">
-    <button type="submit">회원가입</button>
-    <input type="hidden"
-           th:name="${_csrf.parameterName}"
-           th:value="${_csrf.token}" />
-</form>
+<div class = "movie-layer">
+    <span class="movie-wrapper">
+        <form role="form" action="/signup" th:object="${memberDetail}" method="post">
+            나이 : <input type="text" th:field="*{birthDate}" name="birthDate"> <br/><br/>
+            성별:  <input type="text" th:field="*{gender}" name="gender"><br/><br/>
+            email : <input type="email" th:field="*{email}" name="email"><br/><br/>
+            password : <input type="password" th:field="*{password}"  name="password"><br/><br/>
+            <button type="submit">회원가입</button>
+            <input type="hidden"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}" />
+        </form>
+    </span>
+</div>
 </body>
 </html>

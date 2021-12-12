@@ -42,6 +42,7 @@ public class UserController {
         member.setEmail(memberDetail.getUsername());
         member.setPassword(memberDetail.getPassword());
         member.setAuth("USER");
+        member.setCredit(100L);
         userService.joinUser(member);
         return "redirect:/login";
     }
