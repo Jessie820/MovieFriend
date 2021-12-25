@@ -69,14 +69,16 @@ $(function () {
                 var keyword = $('#keyword').val();
                        $.ajax({
                            type: 'GET',
-                           url: '/movies/'+keyword
+                           url: '/movies/search?query='+keyword
                            //dataType: 'json'
                            //contentType:'application/json; charset=utf-8',
-                           }).done(function(res) {
-                           $("#list").replaceWith(res);
-                          // alert(JSON.stringify(res));
+                           }).done(function(res, textStatus, xhr) {
+                               if(xhr.status == '200'){
+                                $("#list").replaceWith(res);
+                               }
+                              // alert(JSON.stringify(res));
                            }).fail(function (error) {
-                           alert(JSON.stringify(error));
+                              alert(error.responseJSON.error.message);
                            });
             });
 

@@ -52,7 +52,7 @@ public class UserController {
         System.out.println("user access");
         MemberDetail memberDetail = (MemberDetail)authentication.getPrincipal();
         model.addAttribute("info", memberDetail.getUsername());
-        return "userAccess";
+        return "movieHome";
     }
 
     // 추가

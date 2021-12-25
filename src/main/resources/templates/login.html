@@ -26,7 +26,7 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
         <div class="title-part">
         <p class="title-text">Movie Friend</p>
         </div>
-    <p th:if="${loginError}" class="error">Wrong user or password</p>
+    <p th:if="${param.error}" class="error" style="color:#9400D3">Wrong user or password</p>
     <form action="/login" method="post">
         <div class="up-part">
             <label for="username">Username</label>:

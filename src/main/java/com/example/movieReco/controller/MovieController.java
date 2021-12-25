@@ -3,6 +3,7 @@ package com.example.movieReco.controller;
 import com.example.movieReco.domain.Member;
 import com.example.movieReco.domain.Movie;
 import com.example.movieReco.domain.Recommendation;
+import com.example.movieReco.error.EmptyInputException;
 import com.example.movieReco.mapper.MemberDetail;
 import com.example.movieReco.mapper.NaverMovieItem;
 import com.example.movieReco.mapper.RecoDetail;
@@ -18,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -35,8 +37,12 @@ public class MovieController {
         return "movieHome";
     }
 
-    @GetMapping("/movies/{keyword}")
-    public String get(Model model, @PathVariable String keyword){
+    @GetMapping("/movies/search")
+    public String get(Model model, @RequestParam(value="query") String keyword){
+       if(!StringUtils.hasText(keyword)){
+           throw new EmptyInputException("데이터를 입력해주세요.");
+       }
+
        log.info("Naver Movie Search");
        NaverMovieItem[] movieItems = NaverMovieService.findByKeyword(keyword).getItems();
        model.addAttribute("movieItems", movieItems);
