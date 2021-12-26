@@ -22,7 +22,7 @@ public class Recommendation {
     @JoinColumn(name = "MOVIE_ID")
     private Movie movie;
 
-    private long userCredit;
+    private long userHeart;
 
     private String comment;
     private String recipientName;

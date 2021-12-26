@@ -12,7 +12,6 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-@Transactional
 @RequiredArgsConstructor
 public class RecommendRepository {
 

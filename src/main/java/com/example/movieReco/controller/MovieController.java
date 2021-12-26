@@ -89,8 +89,10 @@ public class MovieController {
     public String recommendMovie(@ModelAttribute("movieRecommendForm") MovieRecommendForm movieRecommendForm
                                     ,Authentication authentication){
         Movie movie = Movie.createMovie(movieRecommendForm);
+        //Movie 가 이미 저장되어 있으면 저장하지 않는 로직을 추가해야겠다...
         movieService.saveMovie(movie);
 
+        //현재 로그인 된 사용자 정보 가져오기
         MemberDetail memberDetail = (MemberDetail)authentication.getPrincipal();
         Member member = Member.createMember(memberDetail);
         Long recoId = saveRecommendation(movieRecommendForm, movie, member);

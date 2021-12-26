@@ -22,7 +22,7 @@ public class Member {
     private String birthDate;
     private String gender;
 
-    private long credit;
+    private long heart;
 
     @Column(nullable = false)
     private String password;

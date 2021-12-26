@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +41,7 @@ public class UserController {
         member.setEmail(memberDetail.getUsername());
         member.setPassword(memberDetail.getPassword());
         member.setAuth("USER");
-        member.setCredit(100L);
+        member.setHeart(100L);
         userService.joinUser(member);
         return "redirect:/login";
     }

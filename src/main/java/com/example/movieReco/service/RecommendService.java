@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class RecommendService {
 
@@ -16,18 +17,18 @@ public class RecommendService {
     private final MemberRepository memberRepository;
 
     public Long save(Member member, Recommendation recommendation){
-        consumeCredit(member, recommendation.getUserCredit());
+        Member findMember = memberRepository.find(member.getId());
+        consumeHeart(findMember, recommendation.getUserHeart());
         Long id = recommendRepository.save(recommendation);
         return id;
     }
 
-    private void consumeCredit(Member member, long credit){
-        long mCredit = member.getCredit();
-        if(mCredit - credit < 0){
-            throw new RuntimeException("There is not enough credits left");
+    private void consumeHeart(Member member, long heart){
+        long mHeart = member.getHeart();
+        if(mHeart - heart < 0){
+            throw new RuntimeException("Not enough hearts left");
         }
-        member.setCredit(mCredit-credit);
-        memberRepository.save(member);
+        member.setHeart(mHeart-heart);
     }
 
     public Recommendation find(Long id){

@@ -30,6 +30,10 @@ public class UserService implements UserDetailsService {
         memberRepository.save(member);
     }
 
+    public Member find(Long id){
+        return memberRepository.find(id);
+    }
+
     /**
      * Spring Security 필수 메소드 구현
      *
