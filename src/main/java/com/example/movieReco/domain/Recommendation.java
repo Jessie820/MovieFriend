@@ -3,6 +3,7 @@ package com.example.movieReco.domain;
 import com.example.movieReco.controller.MovieRecommendForm;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -28,5 +29,8 @@ public class Recommendation {
     private String recipientName;
     private Long recipientId;
     private String recipientEmail;
+
+    @ColumnDefault("0")
+    private long recipientHeart;
 
 }

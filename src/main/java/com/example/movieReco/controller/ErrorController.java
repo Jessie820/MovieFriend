@@ -1,5 +1,6 @@
 package com.example.movieReco.controller;
 
+import com.example.movieReco.error.DuplicateException;
 import com.example.movieReco.error.EmptyInputException;
 import com.example.movieReco.utils.ApiUtils;
 import static com.example.movieReco.utils.ApiUtils.error;
@@ -39,6 +40,7 @@ public class ErrorController {
 
     @ExceptionHandler({
             EmptyInputException.class,
+            DuplicateException.class
     })
     public ResponseEntity<?> handleNotFoundException(Exception e) {
         return newResponse(e, HttpStatus.BAD_REQUEST);

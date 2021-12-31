@@ -1,6 +1,7 @@
 package com.example.movieReco.controller;
 
 import com.example.movieReco.domain.Member;
+import com.example.movieReco.error.DuplicateException;
 import com.example.movieReco.mapper.MemberDetail;
 import com.example.movieReco.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -14,11 +14,13 @@ public class RecoSaved {
     private MovieDto movie;
     private String comment;
     private MemberDto recommender; // 추천한사람
+    private Long recommendId; //영화추천내역 아이디
 
     public RecoSaved(Recommendation recommendation){
         movie = new MovieDto(recommendation.getMovie());
         comment = recommendation.getComment();
         recommender = new MemberDto(recommendation.getMember());
+        recommendId = recommendation.getId();
     }
 
     @Data

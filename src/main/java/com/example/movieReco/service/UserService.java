@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional
@@ -28,6 +29,16 @@ public class UserService implements UserDetailsService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         member.setPassword(passwordEncoder.encode(member.getPassword()));
         memberRepository.save(member);
+    }
+
+    public String checkEmail(String email){
+        // 기존에 가입되어 있는 고객인지 확인
+        Optional<Member> searchMember = memberRepository.findByEmail(email);
+        if(searchMember.isPresent()){
+            return "emailDuplicate";
+        }else{
+            return "success";
+        }
     }
 
     public Member find(Long id){
@@ -44,10 +55,10 @@ public class UserService implements UserDetailsService {
     @Override // 기본적인 반환 타입은 UserDetails, UserDetails를 상속받은 UserInfo로 반환 타입 지정 (자동으로 다운 캐스팅됨)
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException { // 시큐리티에서 지정한 서비스이기 때문에 이 메소드를 필수로 구현
        System.out.println("email=" + email);
-        Member member = memberRepository.findByEmail(email);
+        Optional<Member> member = memberRepository.findByEmail(email);
        // List<GrantedAuthority> authorities = new ArrayList<>();
        // authorities.add(new SimpleGrantedAuthority("USER"));
        // return new User(member.getEmail(), member.getPassword(), authorities);
-        return new MemberDetail(member);
+        return new MemberDetail(member.get());
     }
 }

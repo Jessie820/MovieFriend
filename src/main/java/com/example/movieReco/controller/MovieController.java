@@ -109,6 +109,15 @@ public class MovieController {
         return "recommendList";
     }
 
+
+    @GetMapping("/recommendList/{recoId}/appreciate")
+    public String recommendAppreciate(Model model, @PathVariable Long recoId){
+        Recommendation recommendation = recommendService.findRecommendation(recoId);
+        RecoSaved recoSaved = new RecoSaved(recommendation);
+        model.addAttribute("recoSaved", recoSaved);
+        return "recommendAppreciate";
+    }
+
     public Long saveRecommendation(MovieRecommendForm mrf, Movie movie, Member member){
         Recommendation recommendation = new Recommendation();
         recommendation.setMember(member);
