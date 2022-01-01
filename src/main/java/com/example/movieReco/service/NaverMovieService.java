@@ -19,7 +19,7 @@ public class NaverMovieService {
     private static final String CLIENT_ID = "n7ho3gt3_wkd233d7ZJl";
     private static final String CLIENT_SECRET = "pcl1b0WtJ4";
 
-    private static final String OpenNaverMovieUrl_getMovies ="https://openapi.naver.com/v1/search/movie.json?query={keyword}";
+    private static final String OpenNaverMovieUrl_getMovies ="https://openapi.naver.com/v1/search/movie.json?query={keyword}&display=20";
 
     static public NaverMovie findByKeyword(String keyword){
         NaverMovie mv = new NaverMovie();

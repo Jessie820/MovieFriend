@@ -2,6 +2,7 @@ package com.example.movieReco.service;
 
 import com.example.movieReco.domain.Member;
 import com.example.movieReco.domain.Recommendation;
+import com.example.movieReco.mapper.RecoSaved;
 import com.example.movieReco.repository.MemberRepository;
 import com.example.movieReco.repository.RecommendRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,12 @@ public class RecommendService {
         consumeHeart(findMember, recommendation.getUserHeart());
         Long id = recommendRepository.save(recommendation);
         return id;
+    }
+
+    public void saveScore(RecoSaved recoSaved){
+        Recommendation recommendation = recommendRepository.find(recoSaved.getRecommendId());
+        recommendation.setRecipientHeart(recoSaved.getRecipientHeart());
+        recommendRepository.save(recommendation);
     }
 
     private void consumeHeart(Member member, long heart){

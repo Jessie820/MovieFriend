@@ -15,6 +15,11 @@ public class RecoSaved {
     private String comment;
     private MemberDto recommender; // 추천한사람
     private Long recommendId; //영화추천내역 아이디
+    private Long recipientHeart;//추천받은 사람이 주는 점수
+
+    public RecoSaved(){
+
+    }
 
     public RecoSaved(Recommendation recommendation){
         movie = new MovieDto(recommendation.getMovie());

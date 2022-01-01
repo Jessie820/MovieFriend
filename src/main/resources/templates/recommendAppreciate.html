@@ -16,8 +16,15 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <div class="container" style="margin-top:50px">
     <div style="margin:10px">
+        <form role="form" action="/movies/scoreReco" th:object="${recoSaved}" method="post">
         <span style="font-weight:900">추천받은 영화는 몇 점인가요?</span>&nbsp
-        <input th:name="score"/>점이에요!
+        <input type="number" min="0" max="100" th:name="recipientHeart" th:value="${recoSaved.recipientHeart}"/>점이에요!
+            <input th:name="recommendId" th:value="${recoSaved.recommendId}" type="hidden"/>
+        <button type="submit" id="score" class="btn btn-primary">점수주기</button>
+        <input type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}" />
+        </form>
     </div>
     <div class="container" th:object="${recoSaved}">
         <p>=================추천내용=====================</p>
@@ -50,47 +57,25 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 </div>
 <!-- 사용자 스크립트 추가 -->
 <script type="text/javascript">
-    // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
-    Kakao.init('f42087373264b2b498315167f788b5d5');
+  $(function () {
+    $('#score').on('click', function () {
+                var keyword = $('#keyword').val();
+                       $.ajax({
+                           type: 'POST',
+                           url: '/movies/search?query='+keyword
+                           //dataType: 'json'
+                           //contentType:'application/json; charset=utf-8',
+                           }).done(function(res, textStatus, xhr) {
+                               if(xhr.status == '200'){
+                                $("#list").replaceWith(res);
+                               }
+                              // alert(JSON.stringify(res));
+                           }).fail(function (error) {
+                              alert(error.responseJSON.error.message);
+                           });
+            });
 
-    // SDK 초기화 여부를 판단합니다.
-    console.log(Kakao.isInitialized());
-
-  Kakao.Link.createDefaultButton({
-    container: '#create-kakao-link-btn',
-    objectType: 'feed',
-    content: {
-      title: '영화 친구',
-      description: '#영화추천',
-      imageUrl:
-        '[[${recoSaved.movie?.imageLink}]]',
-      link: {
-        mobileWebUrl: window.location.href,
-        webUrl: window.location.href,
-      },
-    },
-    social: {
-      likeCount: 286,
-      commentCount: 45,
-      sharedCount: 845,
-    },
-    buttons: [
-      {
-        title: '웹으로 보기',
-        link: {
-          mobileWebUrl: window.location.href,
-          webUrl: window.location.href,
-        },
-      },
-      {
-        title: '앱으로 보기',
-        link: {
-          mobileWebUrl: window.location.href,
-          webUrl: window.location.href
-        },
-      },
-    ],
-  })
+  });
 </script>
 </body>
 </html>

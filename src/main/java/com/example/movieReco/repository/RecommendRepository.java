@@ -2,6 +2,7 @@ package com.example.movieReco.repository;
 
 import com.example.movieReco.domain.Member;
 import com.example.movieReco.domain.Recommendation;
+import com.example.movieReco.mapper.RecoSaved;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

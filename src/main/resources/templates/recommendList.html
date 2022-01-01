@@ -19,10 +19,6 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
         <p>영화추천 내역입니다.</p>
     </div>
     <div class="container" th:object="${recoSaved}">
-            <div class="form-group">
-                <label th:for="name">영화제목</label>
-                <div th:text="${recoSaved.movie?.title}" class="form-control"></div>
-            </div>
             <br/>
             <div class="form-group">
                 <label th:for="director">영화감독</label>

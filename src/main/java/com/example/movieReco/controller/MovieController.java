@@ -63,6 +63,15 @@ public class MovieController {
         return "recommendMovieForm";
     }
 
+    @PostMapping(value = "/movies/scoreReco")
+    public String scoreReo(RecoSaved recoSaved, Model model) {
+        log.info("recipient Heart" + recoSaved.getRecipientHeart());
+        log.info("recommendId" + recoSaved.getRecommendId());
+        recommendService.saveScore(recoSaved);
+        model.addAttribute("memberDetail", new MemberDetail());
+        return "redirect:/signup";
+    }
+
     //예전에 짠 거지같았던 파라미터 넘기기 방법
 //    @GetMapping(value = "/movies/recoNew")
 //    public String createForm(Model model, @RequestParam("movieTitle") String movieTitle
