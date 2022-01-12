@@ -34,7 +34,7 @@ public class Movie {
         movie.setId(mrf.getMovieId());
         movie.setTitle(mrf.getTitle());
         movie.setDirector(mrf.getDirector());
-        movie.setRating(mrf.getUserRating());
+        movie.setRating(mrf.getUserHeart());
         movie.setImageLink(mrf.getImageLink());
         movie.setRecommendCnt(1);
         movie.setReleaseDate(mrf.getReleasesDate());

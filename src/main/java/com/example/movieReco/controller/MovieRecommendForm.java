@@ -9,7 +9,7 @@ public class MovieRecommendForm {
     // @NotEmpty(message = "추천 이유는 필수 입니다")
     public String comment;
     public String releasesDate;
-    private float userRating;
+    private long userHeart;
     private String imageLink;
     private String recipientName;
 
@@ -22,7 +22,7 @@ public class MovieRecommendForm {
         this.title = recoDetail.getTitle();
         this.director = recoDetail.getDirector();
         this.imageLink = recoDetail.getImageLink();
-        this.userRating = recoDetail.getUserRating();
+        this.userHeart = recoDetail.getUserHeart();
     }
 
     public String getMovieId() {
@@ -57,12 +57,12 @@ public class MovieRecommendForm {
         this.releasesDate = releasesDate;
     }
 
-    public float getUserRating() {
-        return userRating;
+    public long getUserHeart() {
+        return userHeart;
     }
 
-    public void setUserRating(float rating) {
-        this.userRating = rating;
+    public void setUserHeart(long heart) {
+        this.userHeart = heart;
     }
 
     public String getImageLink() {

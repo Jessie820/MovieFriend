@@ -17,7 +17,7 @@
                                                                     th:if="${menu} == 'home'">(current)</span></a>
             </li>
             <li class="nav-item" th:classappend="${menu} == 'board'? 'active'">
-                <a class="nav-link" href="#" th:href="@{/movies}">나의 추천함<span class="sr-only"
+                <a class="nav-link" href="#" th:href="@{/myRecommendList}">나의 추천함<span class="sr-only"
                                                                                 th:if="${menu} == 'board'">(current)</span></a>
             </li>
         </ul>
@@ -26,8 +26,9 @@
         <a class="btn btn-secondary my-2 my-sm-0" th:href="@{/login}" sec:authorize="!isAuthenticated()">login</a> <!-- 로그인이 안된 경우  -->
 
         <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
-            <span class="text-white mr-2 mx-2" sec:authentication="name">사용자</span>
-            <span class="text-white mr-2 mx-2" sec:authentication="principal.authorities">권한</span>
+            <span class="text-white mr-2 mx-2" sec:authentication="name"></span>
+<!--            <span class="text-white mr-2 mx-2" sec:authentication="principal.authorities">권한</span>-->
+            <span class="text-white" th:text="${#authentication.getPrincipal().getHeart()}"></span><span class="text-white">♥</span>
             <button class="btn btn-secondary my-2 my-sm-0" type="submit">logout</button>
         </form>
     </div>

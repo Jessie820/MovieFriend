@@ -22,6 +22,8 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class MovieController {
@@ -105,21 +107,21 @@ public class MovieController {
         MemberDetail memberDetail = (MemberDetail)authentication.getPrincipal();
         Member member = Member.createMember(memberDetail);
         Long recoId = saveRecommendation(movieRecommendForm, movie, member);
-        String recommendView = "redirect:/recommendList/";
+        String recommendView = "redirect:/recommendation/";
 
         return (recommendView + recoId);
     }
 
-    @GetMapping("/recommendList/{recoId}")
-    public String recommendList(Model model, @PathVariable Long recoId){
+    @GetMapping("/recommendation/{recoId}")
+    public String recommendation(Model model, @PathVariable Long recoId){
         Recommendation recommendation = recommendService.findRecommendation(recoId);
         RecoSaved recoSaved = new RecoSaved(recommendation);
         model.addAttribute("recoSaved", recoSaved);
-        return "recommendList";
+        return "recommendation";
     }
 
 
-    @GetMapping("/recommendList/{recoId}/appreciate")
+    @GetMapping("/recommendation/{recoId}/appreciate")
     public String recommendAppreciate(Model model, @PathVariable Long recoId){
         Recommendation recommendation = recommendService.findRecommendation(recoId);
         RecoSaved recoSaved = new RecoSaved(recommendation);
@@ -133,8 +135,20 @@ public class MovieController {
         recommendation.setRecipientName(mrf.getRecipientName());
         recommendation.setComment(mrf.getComment());
         recommendation.setMovie(movie);
+        recommendation.setUserHeart(mrf.getUserHeart());
         Long id = recommendService.save(member, recommendation);
         return id;
     }
+
+    @GetMapping("/myRecommendList")
+    public String getMyRecommendList(Model model, Authentication authentication){
+        //현재 로그인 된 사용자 정보 가져오기
+        MemberDetail memberDetail = (MemberDetail)authentication.getPrincipal();
+        Member member = Member.createMember(memberDetail);
+        List<Recommendation> recommendItems = recommendService.findMyRecommendations(member);
+        model.addAttribute("recommendItems", recommendItems);
+        return "myRecommendList";
+    }
+
 
 }

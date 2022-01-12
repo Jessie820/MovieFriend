@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -46,5 +48,8 @@ public class RecommendService {
         return recommendRepository.findRecommendation(id);
     }
 
+    public List<Recommendation> findMyRecommendations(Member member){
+        return recommendRepository.findRecommendationsByMember(member);
+    }
 
 }

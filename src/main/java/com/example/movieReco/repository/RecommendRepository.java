@@ -32,6 +32,14 @@ public class RecommendRepository {
         return query1.getResultList();
     }
 
+    public List<Recommendation> findRecommendationsByMember(Member member){
+        TypedQuery<Recommendation> query1
+                =  em.createQuery("select r from Recommendation r " +
+                "join fetch r.member m where m.id = :memberId", Recommendation.class);
+        query1.setParameter("memberId",1L);
+        return query1.getResultList();
+    }
+
     public Recommendation find(Long id){
         return em.find(Recommendation.class, id);
     }

@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" integrity="sha384-
+ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="/css/jumbotron-narrow.css" rel="stylesheet">
+</head>
+<nav th:replace="common :: menu"></nav>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<div class="container">
+    <div id = "list" style="margin:50px">
+        <span sec:authentication="name"></span>님이 추천한 영화들입니다.
+        <table class="table table-striped">
+            <tr>
+                <td>제목</td>
+                <td>감독</td>
+                <td>내가 준 평점</td>
+                <td>너가 준 평점</td>
+                <td>ID</td>
+                <td>이미지</td>
+            </tr>
+            <tr th:each="rItem : ${recommendItems}">
+                <td th:text="${rItem.movie.title}"></td>
+                <td th:text="${rItem.movie.director}"></td>
+                <td th:text="${rItem.userHeart}"></td>
+                <td th:text="${rItem.recipientHeart}"></td>
+                <td th:text="${rItem.movie.id}"></td>
+                <td>
+                    <img th:src="@{${rItem.movie.imageLink}}" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+
+</script>
+</th:block>
+</html>
+

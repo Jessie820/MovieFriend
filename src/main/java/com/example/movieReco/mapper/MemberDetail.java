@@ -17,6 +17,8 @@ public class MemberDetail implements UserDetails {
     private String birthDate;
     private String gender;
 
+    private Long heart;
+
     public MemberDetail(){
 
     }
@@ -26,6 +28,14 @@ public class MemberDetail implements UserDetails {
         this.email = member.getEmail();
         this.password = member.getPassword();
         this.auth = "ROLE_" + member.getAuth();
+        this.heart = member.getHeart();
+    }
+    public Long getHeart() {
+        return heart;
+    }
+
+    public void setHeart(Long heart) {
+        this.heart = heart;
     }
 
     public Long getMemberId() {

@@ -34,13 +34,18 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
         <div class="form-group">
             <label th:for="comment">추천이유</label>
             <input type="text" th:name="comment" th:value="${movieRecommendForm.comment}" th:text="${movieRecommendForm.comment}"  class="form-control"
-                   placeholder="추천이유를 입력하세요">
+                   placeholder="추천이유를 입력하세요"/>
+        </div>
+        <br/>
+        <div class="form-group">
+            <label th:for="userHeart">이 영화는 몇 점짜리?</label>
+            <input type="number" th:name="userHeart" th:value="${movieRecommendForm.userHeart}" th:text="${movieRecommendForm.userHeart}"  class="form-control"/>
         </div>
         <br/>
         <div class="form-group">
             <label th:for="recipientName">추천자</label>
             <input type="text" th:name="recipientName" th:value="${movieRecommendForm.recipientName}" th:text="${movieRecommendForm.recipientName}" class="form-control"
-                   placeholder="추천해주고 싶은 사람을 입력하세요">
+                   placeholder="추천해주고 싶은 사람을 입력하세요"/>
         </div>
         <br/>
         <div class="form-group">

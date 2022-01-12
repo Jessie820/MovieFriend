@@ -18,7 +18,7 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
     <div style="margin:10px">
         <form role="form" action="/movies/scoreReco" th:object="${recoSaved}" method="post">
         <span style="font-weight:900">추천받은 영화는 몇 점인가요?</span>&nbsp
-        <input type="number" min="0" max="100" th:name="recipientHeart" th:value="${recoSaved.recipientHeart}"/>점이에요!
+        <input type="number" min="-100" max="200" th:name="recipientHeart" th:value="${recoSaved.recipientHeart}"/>점이에요!
             <input th:name="recommendId" th:value="${recoSaved.recommendId}" type="hidden"/>
         <button type="submit" id="score" class="btn btn-primary">점수주기</button>
         <input type="hidden"

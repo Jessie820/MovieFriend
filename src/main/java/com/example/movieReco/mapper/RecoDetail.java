@@ -4,7 +4,7 @@ public class RecoDetail {
     private String movieId;
     private String title;
     private String director;
-    private float userRating;
+    private long userHeart;
     private String imageLink;
 
     public String getMovieId() {
@@ -39,11 +39,11 @@ public class RecoDetail {
         this.imageLink = imageLink;
     }
 
-    public float getUserRating() {
-        return userRating;
+    public long getUserHeart() {
+        return userHeart;
     }
 
-    public void setUserRating(float userRating) {
-        this.userRating = userRating;
+    public void setUserHeart(long userHeart) {
+        this.userHeart = userHeart;
     }
 }
