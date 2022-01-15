@@ -15,7 +15,7 @@ public class MovieRepository {
         em.persist(movie);
     }
 
-    public Movie findOne(String id) {
+    public Movie find(String id) {
         return em.find(Movie.class, id);
     }
 }

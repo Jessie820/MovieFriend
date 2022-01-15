@@ -2,6 +2,7 @@ package com.example.movieReco.controller;
 
 import com.example.movieReco.error.DuplicateException;
 import com.example.movieReco.error.EmptyInputException;
+import com.example.movieReco.error.NoResultException;
 import com.example.movieReco.utils.ApiUtils;
 import static com.example.movieReco.utils.ApiUtils.error;
 import org.slf4j.Logger;
@@ -29,7 +30,9 @@ public class ErrorController {
         return new ResponseEntity<>(error(message, status), headers, status);
     }
 
-    @ExceptionHandler(Throwable.class)
+    @ExceptionHandler({
+            Throwable.class
+    })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String exception(final Throwable throwable, final Model model) {
         logger.error("Exception during execution of SpringSecurity application", throwable);
@@ -42,8 +45,15 @@ public class ErrorController {
             EmptyInputException.class,
             DuplicateException.class
     })
-    public ResponseEntity<?> handleNotFoundException(Exception e) {
+    public ResponseEntity<?> handleBadRequestException(Exception e) {
         return newResponse(e, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({
+            NoResultException.class
+    })
+    public ResponseEntity<?> handleNotFoundException(Exception e) {
+        return newResponse(e, HttpStatus.NOT_FOUND);
     }
 
 }

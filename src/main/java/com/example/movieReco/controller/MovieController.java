@@ -4,6 +4,7 @@ import com.example.movieReco.domain.Member;
 import com.example.movieReco.domain.Movie;
 import com.example.movieReco.domain.Recommendation;
 import com.example.movieReco.error.EmptyInputException;
+import com.example.movieReco.error.NoResultException;
 import com.example.movieReco.mapper.MemberDetail;
 import com.example.movieReco.mapper.NaverMovieItem;
 import com.example.movieReco.mapper.RecoDetail;
@@ -13,10 +14,13 @@ import com.example.movieReco.service.MovieService;
 import com.example.movieReco.service.NaverMovieService;
 //import lombok.extern.slf4j.Slf4j;
 import com.example.movieReco.service.RecommendService;
+import com.example.movieReco.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -32,7 +36,7 @@ public class MovieController {
 
     private final MovieService movieService;
     private final RecommendService recommendService;
-    private final RecommendRepository recommendRepository;
+    private final UserService userService;
 
     @GetMapping(value = "/movies")
     public String home() {
@@ -47,6 +51,9 @@ public class MovieController {
 
        log.info("Naver Movie Search");
        NaverMovieItem[] movieItems = NaverMovieService.findByKeyword(keyword).getItems();
+       if(movieItems.length == 0){
+           throw new NoResultException("영화 검색결과가 없습니다.");
+       }
        model.addAttribute("movieItems", movieItems);
         //return moviesService.findByKeyword(keyword);
         return "movieHome :: #list";
@@ -100,7 +107,6 @@ public class MovieController {
     public String recommendMovie(@ModelAttribute("movieRecommendForm") MovieRecommendForm movieRecommendForm
                                     ,Authentication authentication){
         Movie movie = Movie.createMovie(movieRecommendForm);
-        //Movie 가 이미 저장되어 있으면 저장하지 않는 로직을 추가해야겠다...
         movieService.saveMovie(movie);
 
         //현재 로그인 된 사용자 정보 가져오기
@@ -108,6 +114,11 @@ public class MovieController {
         Member member = Member.createMember(memberDetail);
         Long recoId = saveRecommendation(movieRecommendForm, movie, member);
         String recommendView = "redirect:/recommendation/";
+
+        //하트 수 업데이트를 위한 사용자 정보 재조회
+        MemberDetail newMember = new MemberDetail(userService.find(member.getId()));
+        Authentication newAuth = new UsernamePasswordAuthenticationToken(newMember, memberDetail.getPassword(), memberDetail.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
 
         return (recommendView + recoId);
     }

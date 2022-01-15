@@ -13,7 +13,10 @@ public class MovieService {
     private final MovieRepository movieRepository;
 
     public String saveMovie(Movie movie){
-        movieRepository.save(movie);
+        Movie m = movieRepository.find(movie.getId());
+        if(m == null){
+            movieRepository.save(movie);
+        }
         return movie.getId();
     }
 
