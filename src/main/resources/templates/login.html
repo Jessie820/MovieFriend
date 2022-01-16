@@ -7,7 +7,26 @@
 ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
     <link href="/css/moviereco-basic.css" rel="stylesheet">
-    <style>
+    <style th:inline="text">
+       body{
+         height: 100vh;
+         background-image: url("image/window-6800397.jpg");
+         background-repeat : no-repeat;
+         background-position: center;
+         background-size: cover;
+       }
+       a:link {
+          color : white;
+        }
+        a:visited {
+          color : black;
+        }
+        a:hover {
+          color : black;
+        }
+        a:active {
+          color : black
+        }
         .title-part{
             display: block;
         }
@@ -16,8 +35,6 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
             font-size: 250%;
             font-weight: bold;
         }
-
-
     </style>
 </head>
 <body>
@@ -37,12 +54,12 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
         <div class="down-part">
             <div class="left-box"></div>
             <div class="right-box">
-                <button type="submit" class="btn btn-info">로그인</button>
+                <button type="submit" class="btn btn-outline-light">로그인</button>
                 <input type="hidden"
                        th:name="${_csrf.parameterName}"
                        th:value="${_csrf.token}" />
 <!--                <button th:onclick="'location.href=\''+ @{${signup}} + '\''">회원가입</button>-->
-                <a th:href="@{/signup}" class="btn btn-info">회원가입</a>
+                <a th:href="@{/signup}" class="btn btn-outline-light">회원가입</a>
             </div>
         </div>
     </form>

@@ -26,9 +26,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
 
     @Override
     protected void configure(HttpSecurity http) throws Exception { // 5
+        String[] staticResources  =  {
+                "/css/**",
+                "/image/**",
+                "/font/**",
+        };
+
         http
                 //.csrf().disable() is commented because i dont want disable this kind of protection
                 .authorizeRequests() // 6
+                .antMatchers(staticResources).permitAll()
                 .antMatchers("/login", "/signup/**", "/user", "/movies/**","/recommendation/**").permitAll() // 누구나 접근 허용
                 .antMatchers("/").hasRole("USER") // USER, ADMIN만 접근 가능
                 .antMatchers("/admin").hasRole("ADMIN") // ADMIN만 접근 가능
