@@ -29,6 +29,20 @@ public class RecommendService {
     public void saveScore(RecoSaved recoSaved){
         Recommendation recommendation = recommendRepository.find(recoSaved.getRecommendId());
         recommendation.setRecipientHeart(recoSaved.getRecipientHeart());
+
+        Member member = recommendation.getMember();
+        long userHeart = recommendation.getUserHeart();
+        long recipientHeart = recommendation.getRecipientHeart();
+        long oriHeart = member.getHeart();
+
+        if(userHeart <= recipientHeart){
+            long rewardHeart = (recipientHeart - userHeart)*2;
+            member.setHeart(oriHeart+rewardHeart);
+            recommendation.setRewardHeart(rewardHeart);
+        }else{
+            member.setHeart(oriHeart+10L);
+            recommendation.setRewardHeart(10);
+        }
         recommendRepository.save(recommendation);
     }
 

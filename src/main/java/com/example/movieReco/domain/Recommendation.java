@@ -31,6 +31,9 @@ public class Recommendation {
     private String recipientEmail;
 
     @ColumnDefault("0")
-    private long recipientHeart;//추천받은 사람이 주는 점수
+    private long recipientHeart;//추천받은 사람이 주는 하트
+
+    @ColumnDefault("0")
+    private long rewardHeart;//보상 하트
 
 }

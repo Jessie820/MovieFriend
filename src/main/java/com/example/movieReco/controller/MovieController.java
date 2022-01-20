@@ -16,6 +16,7 @@ import com.example.movieReco.service.NaverMovieService;
 import com.example.movieReco.service.RecommendService;
 import com.example.movieReco.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -81,46 +82,31 @@ public class MovieController {
         return "redirect:/signup";
     }
 
-    //예전에 짠 거지같았던 파라미터 넘기기 방법
-//    @GetMapping(value = "/movies/recoNew")
-//    public String createForm(Model model, @RequestParam("movieTitle") String movieTitle
-//                                        ,@RequestParam("movieDirector") String movieDirector
-//                                        ,@RequestParam("userRating") float userRating
-//                                        ,@RequestParam("movieId") String movieId
-//                                        ,@RequestParam("movieImage") String movieImage
-//                            ) {
-//        log.info("movieRecommendForm");
-//        log.info("movie title" + movieTitle);
-//        log.info("movie director" + movieDirector);
-//
-//        MovieRecommendForm movieRecommendForm = new MovieRecommendForm();
-//        movieRecommendForm.setTitle(movieTitle);
-//        movieRecommendForm.setDirector(movieDirector);
-//        movieRecommendForm.setUserRating(userRating);
-//        movieRecommendForm.setMovieId(movieId);
-//        movieRecommendForm.setImageLink(movieImage);
-//        model.addAttribute("movieRecommendForm", movieRecommendForm);
-//        return "recommendMovieForm";
-//    }
-
     @PostMapping(value = "movies/recommendMovie")
     public String recommendMovie(@ModelAttribute("movieRecommendForm") MovieRecommendForm movieRecommendForm
                                     ,Authentication authentication){
         Movie movie = Movie.createMovie(movieRecommendForm);
         movieService.saveMovie(movie);
 
-        //현재 로그인 된 사용자 정보 가져오기
-        MemberDetail memberDetail = (MemberDetail)authentication.getPrincipal();
-        Member member = Member.createMember(memberDetail);
+        Member member = getMemberCurInfo(authentication);
+
         Long recoId = saveRecommendation(movieRecommendForm, movie, member);
         String recommendView = "redirect:/recommendation/";
+
+        return (recommendView + recoId);
+    }
+
+    @NotNull
+    private Member getMemberCurInfo(Authentication authentication) {
+        //현재 로그인 된 사용자 정보 가져오기
+        MemberDetail memberDetail = (MemberDetail) authentication.getPrincipal();
+        Member member = Member.createMember(memberDetail);
 
         //하트 수 업데이트를 위한 사용자 정보 재조회
         MemberDetail newMember = new MemberDetail(userService.find(member.getId()));
         Authentication newAuth = new UsernamePasswordAuthenticationToken(newMember, memberDetail.getPassword(), memberDetail.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(newAuth);
-
-        return (recommendView + recoId);
+        return member;
     }
 
     @GetMapping("/recommendation/{recoId}")
@@ -156,6 +142,7 @@ public class MovieController {
         //현재 로그인 된 사용자 정보 가져오기
         MemberDetail memberDetail = (MemberDetail)authentication.getPrincipal();
         Member member = Member.createMember(memberDetail);
+        getMemberCurInfo(authentication);
         List<Recommendation> recommendItems = recommendService.findMyRecommendations(member);
         model.addAttribute("recommendItems", recommendItems);
         return "myRecommendList";

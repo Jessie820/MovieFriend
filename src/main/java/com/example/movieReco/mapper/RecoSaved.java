@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 public class RecoSaved {
     private MovieDto movie;
     private String comment;
+    private Long userHeart;
     private MemberDto recommender; // 추천한사람
     private Long recommendId; //영화추천내역 아이디
     private Long recipientHeart;//추천받은 사람이 주는 점수
@@ -24,6 +25,7 @@ public class RecoSaved {
     public RecoSaved(Recommendation recommendation){
         movie = new MovieDto(recommendation.getMovie());
         comment = recommendation.getComment();
+        userHeart = recommendation.getUserHeart();
         recommender = new MemberDto(recommendation.getMember());
         recommendId = recommendation.getId();
     }

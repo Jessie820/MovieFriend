@@ -23,8 +23,9 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
             <tr>
                 <td>제목</td>
                 <td>감독</td>
-                <td>내가 준 평점</td>
-                <td>너가 준 평점</td>
+                <td>내가 준 하트</td>
+                <td>너가 준 하트</td>
+                <td>보상 하트</td>
                 <td>ID</td>
                 <td>이미지</td>
             </tr>
@@ -33,6 +34,7 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
                 <td th:text="${rItem.movie.director}"></td>
                 <td th:text="${rItem.userHeart}"></td>
                 <td th:text="${rItem.recipientHeart}"></td>
+                <td th:text="${rItem.rewardHeart}"></td>
                 <td th:text="${rItem.movie.id}"></td>
                 <td>
                     <img th:src="@{${rItem.movie.imageLink}}" />
