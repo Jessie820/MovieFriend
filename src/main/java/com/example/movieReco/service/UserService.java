@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -54,11 +55,13 @@ public class UserService implements UserDetailsService {
      */
     @Override // 기본적인 반환 타입은 UserDetails, UserDetails를 상속받은 UserInfo로 반환 타입 지정 (자동으로 다운 캐스팅됨)
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException { // 시큐리티에서 지정한 서비스이기 때문에 이 메소드를 필수로 구현
-       System.out.println("email=" + email);
         Optional<Member> member = memberRepository.findByEmail(email);
+        Long todayRecommendCnt = memberRepository.getRecommendCnt(member.get().getId(), LocalDate.now());
+        MemberDetail curMemberDetail = new MemberDetail(member.get());
+        curMemberDetail.setTodayRecommendCnt(todayRecommendCnt);
        // List<GrantedAuthority> authorities = new ArrayList<>();
        // authorities.add(new SimpleGrantedAuthority("USER"));
        // return new User(member.getEmail(), member.getPassword(), authorities);
-        return new MemberDetail(member.get());
+        return curMemberDetail;
     }
 }

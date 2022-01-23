@@ -1,14 +1,18 @@
 package com.example.movieReco.mapper;
 
 import com.example.movieReco.domain.Member;
-import com.example.movieReco.repository.MemberRepository;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 
+@Getter
+@Setter
 public class MemberDetail implements UserDetails {
     private Long memberId;
     private String email;
@@ -18,6 +22,9 @@ public class MemberDetail implements UserDetails {
     private String gender;
 
     private Long heart;
+
+    private LocalDate today;
+    private Long todayRecommendCnt;
 
     public MemberDetail(){
 
@@ -29,57 +36,7 @@ public class MemberDetail implements UserDetails {
         this.password = member.getPassword();
         this.auth = "ROLE_" + member.getAuth();
         this.heart = member.getHeart();
-    }
-    public Long getHeart() {
-        return heart;
-    }
-
-    public void setHeart(Long heart) {
-        this.heart = heart;
-    }
-
-    public Long getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(Long memberId) {
-        this.memberId = memberId;
-    }
-
-    public String getAuth() {
-        return auth;
-    }
-
-    public void setAuth(String auth) {
-        this.auth = auth;
-    }
-
-    public String getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password){
-        this.password = password;
+        this.today = LocalDate.now();
     }
 
     @Override

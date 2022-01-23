@@ -26,7 +26,8 @@ public class RecommendService {
         return id;
     }
 
-    public void saveScore(RecoSaved recoSaved){
+    //추천받은 영화에 하트주기
+    public void scoreReco(RecoSaved recoSaved){
         Recommendation recommendation = recommendRepository.find(recoSaved.getRecommendId());
         recommendation.setRecipientHeart(recoSaved.getRecipientHeart());
 
@@ -37,7 +38,7 @@ public class RecommendService {
 
         if(userHeart <= recipientHeart){
             long rewardHeart = (recipientHeart - userHeart)*2;
-            member.setHeart(oriHeart+rewardHeart);
+            member.setHeart(oriHeart+userHeart+rewardHeart);
             recommendation.setRewardHeart(rewardHeart);
         }else{
             member.setHeart(oriHeart+10L);

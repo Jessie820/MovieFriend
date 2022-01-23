@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +33,13 @@ public class MemberRepository {
                .getResultList().stream().findFirst();
 
        return member;
+    }
+
+    public Long getRecommendCnt(Long id, LocalDate localDate){
+        TypedQuery<Long> cnt = em.createQuery("select count(r) from Recommendation r "+
+                "join r.member m where m.id = :memberId and r.createdDate = :localDate",Long.class);
+        cnt.setParameter("memberId",id).setParameter("localDate", localDate);
+        return cnt.getSingleResult();
     }
 
 }

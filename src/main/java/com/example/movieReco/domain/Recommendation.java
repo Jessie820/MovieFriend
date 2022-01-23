@@ -6,11 +6,12 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name="recommendation")
 @Getter @Setter
-public class Recommendation {
+public class Recommendation extends BaseEntity{
     @Id
     @GeneratedValue
     private Long id;

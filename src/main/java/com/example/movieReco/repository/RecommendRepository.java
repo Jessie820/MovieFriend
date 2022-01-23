@@ -28,7 +28,7 @@ public class RecommendRepository {
         TypedQuery<String> query1
                 =  em.createQuery("select r.comment from Recommendation r " +
                 "join r.member m where m.id = :memberId", String.class);
-        query1.setParameter("memberId",1L);
+        query1.setParameter("memberId",member.getId());
         return query1.getResultList();
     }
 
@@ -36,7 +36,7 @@ public class RecommendRepository {
         TypedQuery<Recommendation> query1
                 =  em.createQuery("select r from Recommendation r " +
                 "join fetch r.member m where m.id = :memberId", Recommendation.class);
-        query1.setParameter("memberId",1L);
+        query1.setParameter("memberId",member.getId());
         return query1.getResultList();
     }
 
