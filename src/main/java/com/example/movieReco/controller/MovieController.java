@@ -107,7 +107,7 @@ public class MovieController {
         memberDetail.setTodayRecommendCnt(updatedRecommendCnt);
 
         //로그인한 날짜가 오늘과 다르면 날짜 및 오늘 추천수 update
-        if(memberDetail.getToday() != LocalDate.now()){
+        if(memberDetail.getToday().compareTo(LocalDate.now())!=0){
             memberDetail.setToday(LocalDate.now());
             memberDetail.setTodayRecommendCnt(0L);
         }
