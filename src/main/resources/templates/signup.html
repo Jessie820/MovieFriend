@@ -47,7 +47,6 @@ $(function () {
     $('#checkemail').on('click', function () {
         //alert("중복체크");
         var email = $('#email').val();
-
         $.ajax({
                            type: 'GET',
                            url: '/signup/checkemail?query='+email
@@ -63,7 +62,6 @@ $(function () {
                            });
 
      });
-
   });
 
   function disable_email() {

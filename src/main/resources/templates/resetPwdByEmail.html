@@ -1,0 +1,62 @@
+<!--회원가입 페이지-->
+<!--signup.html-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" integrity="sha384-
+ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link href="/css/moviereco-basic.css" rel="stylesheet">
+    <style>
+        .content-wrapper *{
+            text-align: left;
+        }
+    </style>
+</head>
+<nav th:replace="common :: menu"></nav>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<div class = "movie-layer">
+    <span class="movie-wrapper">
+        <p style="color:#69a5d6; font-weight:800; font-size:large">비밀번호 재설정을 위해 아이디를 입력해주세요.</p>
+        <div class="content-wrapper">
+            <span>email:</span> <input type="email" name="email" id="email" /></br></br>
+            <span>호호호 다 입력하셨나요? 그렇다면</span> <button type="button" id="resetbtn">비밀번호 재설정</button>
+        </div>
+        <div id="resultDiv">
+            <p th:if="${msg}!=null" th:text="${msg}"></p>
+        </div>
+    </span>
+</div>
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+<script th:inline="javascript">
+$(function () {
+    $('#resetbtn').on('click', function () {
+         alert("비밀번호 재설정");
+         var email = $('#email').val();
+        $.ajax({
+            type: 'GET',
+            url: '/resetPwdByEmail?query='+email,
+        }).done(function(fragment) {
+           $('#resultDiv').replaceWith(fragment);
+        }).fail(function (error) {
+          alert(error.responseJSON.error.message);
+       });
+     });
+  });
+
+  function chkValidation(){
+     var email = $('#email').val();
+    if(!email){
+        alert('이메일을 입력해 주세요.');
+    }
+    return true;
+  }
+
+</script>
+</th:block>
+</body>
+</html>

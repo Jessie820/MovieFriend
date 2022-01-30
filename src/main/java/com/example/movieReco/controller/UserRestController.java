@@ -1,12 +1,17 @@
 package com.example.movieReco.controller;
 
+import com.example.movieReco.domain.Member;
 import com.example.movieReco.error.DuplicateException;
+import com.example.movieReco.mapper.MemberDetail;
 import com.example.movieReco.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,4 +29,6 @@ public class UserRestController {
         }
         return new ResponseEntity(HttpStatus.OK);
     }
+
+
 }

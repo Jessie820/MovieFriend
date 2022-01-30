@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @RequiredArgsConstructor
 @Transactional
@@ -44,6 +45,31 @@ public class UserService implements UserDetailsService {
 
     public Member find(Long id){
         return memberRepository.find(id);
+    }
+
+    public Optional<Member> findByEmail(String email) {
+        return memberRepository.findByEmail(email);
+    }
+
+    public String getTempPassword(){
+        String number = "1234567890";
+        String ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String special = "!@#$%&*";
+        Random rnd = new Random();
+        StringBuilder sb = new StringBuilder(9);
+        for(int i=0; i<3; i++){
+            sb.append(number.charAt(rnd.nextInt(number.length())));
+        }
+
+        for(int i=3; i<7; i++){
+            sb.append(number.charAt(rnd.nextInt(ABC.length())));
+        }
+
+        for(int i=7; i<9; i++){
+            sb.append(number.charAt(rnd.nextInt(special.length())));
+        }
+
+        return sb.toString();
     }
 
     /**
