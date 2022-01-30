@@ -66,7 +66,6 @@ public class UserController {
         return "movieHome";
     }
 
-    // 추가
     @GetMapping(value = "/logout")
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
