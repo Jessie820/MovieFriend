@@ -62,11 +62,11 @@ public class UserService implements UserDetailsService {
         }
 
         for(int i=3; i<7; i++){
-            sb.append(number.charAt(rnd.nextInt(ABC.length())));
+            sb.append(ABC.charAt(rnd.nextInt(ABC.length())));
         }
 
         for(int i=7; i<9; i++){
-            sb.append(number.charAt(rnd.nextInt(special.length())));
+            sb.append(special.charAt(rnd.nextInt(special.length())));
         }
 
         return sb.toString();

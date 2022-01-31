@@ -98,9 +98,9 @@ public class UserController {
 
                 StringBuilder body = new StringBuilder();
                 body.append("안녕하세요 ").append(member.getEmail()).append("님");
-                body.append("\n귀하께서 요청하신 임시 비밀번호 수신을 위해 발송된 메일입니다.");
-                body.append("\n고객님의 임시 비밀번호는 ").append(tmpPassword).append("입니다.");
-                body.append("로그인 후에는 새로운 비밀번호로 변경하셔야 합니다.");
+                body.append("<br/>귀하께서 요청하신 임시 비밀번호 수신을 위해 발송된 메일입니다.");
+                body.append("<br/>고객님의 임시 비밀번호는 ").append(tmpPassword).append("입니다.");
+                body.append("<br/>로그인 후에는 새로운 비밀번호로 변경하셔야 합니다.");
 
                 mimeMessageHelper.setText(body.toString(), true);
                 javaMailSender.send(mimeMessage);
