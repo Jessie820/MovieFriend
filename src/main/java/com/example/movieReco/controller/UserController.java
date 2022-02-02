@@ -1,9 +1,11 @@
 package com.example.movieReco.controller;
 
+import com.example.movieReco.constant.Method;
 import com.example.movieReco.domain.Member;
 import com.example.movieReco.error.DuplicateException;
 import com.example.movieReco.mapper.MemberDetail;
 import com.example.movieReco.service.UserService;
+import com.example.movieReco.utils.UiUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -28,7 +30,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-public class UserController {
+public class UserController extends UiUtils {
     private final UserService userService;
     private final JavaMailSender javaMailSender;
     @Value("${spring.mail.username}")
@@ -72,9 +74,37 @@ public class UserController {
         return "redirect:/login";
     }
 
+    @GetMapping(value = "/myInfo")
+    public String myInfo(Model model){
+        model.addAttribute("memberDetail", new MemberDetail());
+        return "myInfo";
+    }
+
+
+
+    @GetMapping(value = "/resetPwd")
+    public String resetPwd(Model model){
+        model.addAttribute("memberDetail", new MemberDetail());
+        return "resetPwd";
+    }
+
     @GetMapping(value = "/resetPwdByEmailForm")
     public String resetPwdByEmailForm(){
         return "resetPwdByEmail";
+    }
+
+    @PostMapping(value = "/resetPwd")
+    public String resetPwdForm(MemberDetail memberDetail, Authentication authentication, Model model){
+        try {
+            MemberDetail curMemberDetail = (MemberDetail) authentication.getPrincipal();
+            Member member = userService.find(curMemberDetail.getMemberId());
+            member.setPassword(memberDetail.getPassword());
+            userService.joinUser(member);
+        }catch(Exception e){
+            model.addAttribute("memberDetail", new MemberDetail());
+            return showMessageWithRedirect("비밀번호 재설정에 실패하였습니다.", "/resetPwd", Method.GET, null, model);
+        }
+        return showMessageWithRedirect("비밀번호 재설정에 성공했습니다. 다시 로그인해주세요.", "/login", Method.GET, null, model);
     }
 
     @GetMapping(value = "/resetPwdByEmail")

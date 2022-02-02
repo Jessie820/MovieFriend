@@ -1,0 +1,59 @@
+<!--회원가입 페이지-->
+<!--signup.html-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" integrity="sha384-
+ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link href="/css/moviereco-basic.css" rel="stylesheet">
+    <style>
+        .content-wrapper *{
+            text-align: left;
+        }
+    </style>
+</head>
+<nav th:replace="common :: menu"></nav>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<div class = "movie-layer">
+    <span class="movie-wrapper">
+        <p style="color:#69a5d6; font-weight:800; font-size:large">새 비밀번호를 입력해주세요.</p>
+        <form role="form" action="/resetPwd" th:object="${memberDetail}" method="post" onsubmit="return chkValidation()">
+        <div class="content-wrapper">
+            <span>비밀번호:</span> <input type="password" name="password" id="password" /></br></br>
+            <span>비밀번호 확인:</span> <input type="password" name="passwordChk" id="passwordChk" /></br></br>
+        </div>
+        <br/><font id="chkNotice" size="2"></font>
+            <button type="submit" id="resetBtn" disabled>비밀번호 재설정</button>
+         <input type="hidden"
+                th:name="${_csrf.parameterName}"
+                th:value="${_csrf.token}" />
+        </form>
+    </span>
+</div>
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+<script th:inline="javascript">
+ $('#password, #passwordChk').keyup(function(){
+      $('#chkNotice').html('');
+    });
+
+    $('#password, #passwordChk').keyup(function(){
+        if($('#password').val() != $('#passwordChk').val()){
+          $('#chkNotice').html('비밀번호 일치하지 않음<br><br>');
+          $('#chkNotice').attr('color', '#f82a2aa3');
+          $('#resetBtn').attr("disabled",true);
+        } else{
+          $('#chkNotice').html('비밀번호 일치함<br><br>');
+          $('#chkNotice').attr('color', '#199894b3');
+          $('#resetBtn').attr("disabled",false);
+        }
+    });
+
+</script>
+</th:block>
+</body>
+</html>
