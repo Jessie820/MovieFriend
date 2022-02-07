@@ -17,10 +17,13 @@
                                                                     th:if="${menu} == 'home'">(current)</span></a>
             </li>
             <li class="nav-item" th:classappend="${menu} == 'board'? 'active'">
-                <a class="nav-link" href="#" sec:authorize="!isAuthenticated()" th:href="@{/myRecommendList}">나의 추천함<span class="sr-only"
+                <a class="nav-link" href="#" sec:authorize="isAuthenticated()" th:href="@{/myRecommendList}">나의 추천함<span class="sr-only"
                                                                                 th:if="${menu} == 'board'">(current)</span></a>
             </li>
-            <a class="nav-link active" th:href="@{/myInfo}" sec:authorize="isAuthenticated()">내 정보</a>
+            <li class="nav-item" th:classappend="${menu} == 'myinfo'? 'active'">
+                <a class="nav-link" href="#" sec:authorize="isAuthenticated()" th:href="@{/myInfo}">내 정보<span class="sr-only"
+                                                                                                                         th:if="${menu} == 'myinfo'">(current)</span></a>
+            </li>
         </ul>
         <a class="btn btn-secondary mr-2 my-2 my-sm-0" th:href="@{/signup}" sec:authorize="!isAuthenticated()">register</a>
      &nbsp;

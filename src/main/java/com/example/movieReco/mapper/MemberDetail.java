@@ -35,6 +35,8 @@ public class MemberDetail implements UserDetails {
         this.email = member.getEmail();
         this.password = member.getPassword();
         this.auth = "ROLE_" + member.getAuth();
+        this.birthDate = member.getBirthDate();
+        this.gender = member.getGender();
         this.heart = member.getHeart();
         this.today = LocalDate.now();
     }

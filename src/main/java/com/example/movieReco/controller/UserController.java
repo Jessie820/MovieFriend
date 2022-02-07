@@ -75,12 +75,18 @@ public class UserController extends UiUtils {
     }
 
     @GetMapping(value = "/myInfo")
-    public String myInfo(Model model){
-        model.addAttribute("memberDetail", new MemberDetail());
+    public String myInfo(Model model, Authentication authentication){
+        MemberDetail curMemberDetail = (MemberDetail) authentication.getPrincipal();
+        model.addAttribute("memberDetail", curMemberDetail);
         return "myInfo";
     }
 
-
+    @PostMapping(value = "/myInfo")
+    public String updateMyInfo(Model model, Authentication authentication){
+        MemberDetail curMemberDetail = (MemberDetail) authentication.getPrincipal();
+        model.addAttribute("memberDetail", curMemberDetail);
+        return "myInfo";
+    }
 
     @GetMapping(value = "/resetPwd")
     public String resetPwd(Model model){
