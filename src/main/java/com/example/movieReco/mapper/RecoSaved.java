@@ -5,6 +5,7 @@ import com.example.movieReco.domain.Movie;
 import com.example.movieReco.domain.Recommendation;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,7 +34,7 @@ public class RecoSaved {
     @Data
     static class MemberDto{
         private String email;
-        private String birthDate;
+        private LocalDate birthDate;
         private String gender;
 
         public MemberDto(Member member){

@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -21,11 +22,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Controller
@@ -38,7 +41,9 @@ public class UserController extends UiUtils {
 
     @GetMapping(value = "/signup")
     public String signUpForm(Model model){
-        model.addAttribute("memberDetail", new MemberDetail());
+        MemberDetail memberDetial = new MemberDetail();
+        memberDetial.setBirthDate(LocalDate.now());
+        model.addAttribute("memberDetail", memberDetial);
         return "signup";
     }
 
@@ -82,10 +87,25 @@ public class UserController extends UiUtils {
     }
 
     @PostMapping(value = "/myInfo")
-    public String updateMyInfo(Model model, Authentication authentication){
-        MemberDetail curMemberDetail = (MemberDetail) authentication.getPrincipal();
-        model.addAttribute("memberDetail", curMemberDetail);
-        return "myInfo";
+    public String updateMyInfo(MemberDetail newDetail, RedirectAttributes redirectAttributes, Authentication authentication){
+        try {
+            MemberDetail curMemberDetail = (MemberDetail) authentication.getPrincipal();
+            Member member = userService.find(curMemberDetail.getMemberId());
+            member.setBirthDate(newDetail.getBirthDate());
+            member.setGender(newDetail.getGender());
+            userService.saveUser(member);
+
+            Authentication newAuth = new UsernamePasswordAuthenticationToken(new MemberDetail(member), curMemberDetail.getPassword(), curMemberDetail.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(newAuth);
+            redirectAttributes.addFlashAttribute("memberDetail", new MemberDetail(member));
+            redirectAttributes.addFlashAttribute("message", "정보변경에 성공했습니다.");
+            redirectAttributes.addFlashAttribute("alertClass", "alert-success");
+
+        }catch(Exception e){
+            redirectAttributes.addFlashAttribute("message", "정보변경에 실패했습니다.");
+            redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
+        }
+        return "redirect:/myInfo";
     }
 
     @GetMapping(value = "/resetPwd")

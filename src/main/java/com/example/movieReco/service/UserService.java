@@ -27,6 +27,10 @@ public class UserService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
+    public void saveUser(Member member){
+        memberRepository.save(member);
+    }
+
     public void joinUser(Member member){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         member.setPassword(passwordEncoder.encode(member.getPassword()));

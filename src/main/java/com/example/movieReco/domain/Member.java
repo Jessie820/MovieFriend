@@ -3,11 +3,13 @@ package com.example.movieReco.domain;
 import com.example.movieReco.mapper.MemberDetail;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.LocalDate;
 
 @Entity
 @Getter @Setter
@@ -19,7 +21,7 @@ public class Member extends BaseEntity{
 
     @Column(unique = true, nullable = false)
     private String email;
-    private String birthDate;
+    private LocalDate birthDate;
     private String gender;
 
     private long heart;

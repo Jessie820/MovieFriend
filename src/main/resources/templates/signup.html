@@ -23,7 +23,7 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
         <p style="color:#69a5d6; font-weight:800; font-size:large">찰떡같은 영화를 추천해주는 친구가 되어보세요!</p>
         <div class="content-wrapper">
         <form role="form" action="/signup" th:object="${memberDetail}" method="post" onsubmit="return chkValidation()">
-            <span>생년월일:</span> <input type="text" th:field="*{birthDate}" name="birthDate"/> <br/><br/>
+            <span>생년월일:</span> <input type="date" th:value="${memberDetail.birthDate}" th:field="*{birthDate}" name="birthDate"/> <br/><br/>
             <span>성별:</span>
             <select class="select_type01 w170" th:field="*{gender}" name="gender">
 	            <option th:value="여" th:text="여"></option>

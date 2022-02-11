@@ -3,6 +3,7 @@ package com.example.movieReco.mapper;
 import com.example.movieReco.domain.Member;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +19,9 @@ public class MemberDetail implements UserDetails {
     private String email;
     private String password;
     private String auth;
-    private String birthDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthDate;
     private String gender;
 
     private Long heart;
