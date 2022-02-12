@@ -45,7 +45,7 @@ public class MovieController {
     }
 
     @GetMapping("/movies/search")
-    public String get(Model model, @RequestParam(value="query") String keyword){
+    public String searchMovie(Model model, @RequestParam(value="query") String keyword){
        if(!StringUtils.hasText(keyword)){
            throw new EmptyInputException("데이터를 입력해주세요.");
        }
@@ -169,5 +169,4 @@ public class MovieController {
         model.addAttribute("recommendItems", recommendItems);
         return "myRecommendList";
     }
-    
 }

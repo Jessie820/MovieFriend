@@ -3,6 +3,7 @@ package com.example.movieReco.controller;
 import com.example.movieReco.constant.Method;
 import com.example.movieReco.domain.Member;
 import com.example.movieReco.error.DuplicateException;
+import com.example.movieReco.error.NoResultException;
 import com.example.movieReco.mapper.MemberDetail;
 import com.example.movieReco.service.UserService;
 import com.example.movieReco.utils.UiUtils;
@@ -18,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -169,5 +171,28 @@ public class UserController extends UiUtils {
         }
         model.addAttribute("msg", "이메일로 임시 비밀번호가 발송되었습니다.");
         return "resetPwdByEmail :: #resultDiv";
+    }
+
+    @GetMapping(value = "/findFriend")
+    public String view(Model model) throws Exception {
+        return "popup/findFriend";
+    }
+    @GetMapping("/findEmail")
+    public String findEmail(Model model, @RequestParam(value="query") String email){
+        if(!StringUtils.hasText(email)){
+            model.addAttribute("message", "검색할 이메일을 입력해주세요.");
+            model.addAttribute("alertClass", "alert-danger");
+            return "popup/findFriend :: #resultDiv";
+        }
+
+        Optional<Member> opMember = userService.findByEmail(email);
+        if(!opMember.isPresent()){
+            model.addAttribute("message", "이메일 검색 결과가 없습니다.");
+            model.addAttribute("alertClass", "alert-danger");
+        }else{
+            model.addAttribute("message", "이메일이 존재합니다.");
+            model.addAttribute("alertClass", "alert-success");
+        }
+        return "popup/findFriend :: #resultDiv";
     }
 }

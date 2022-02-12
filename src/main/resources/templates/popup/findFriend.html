@@ -1,0 +1,59 @@
+<!--회원가입 페이지-->
+<!--signup.html-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" integrity="sha384-
+ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link href="/css/moviereco-basic.css" rel="stylesheet">
+    <style>
+        .content-wrapper *{
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<div class = "movie-layer">
+    <span class="movie-wrapper">
+        <p style="color:#69a5d6; font-weight:800; font-size:large">영화 친구 아이디를 입력후 검색해주세요.</p>
+            <input id="friendEmail" type="text" th:name="friendEmail" style="width:100px"/> <button type="button" id="findEmail" class="btn btn-primary">찾기</button>
+     <br/><br/>
+    <div id="resultDiv">
+        <p th:if="${message}!=null" th:text="${message}"></p>
+    </div>
+        <br/>
+         <button type="button" id="returnEmail" class="btn btn-primary">이메일 확인</button>
+        <br/>
+    <span style="color:#69a5d6; font-weight:500">검색결과가 없다면 추천자의 이름을 직접 입력해주세요.</span><br/>
+        <span style="color:#69a5d6; font-weight:500">영화친구가 아니더라도 카카오톡 공유가 가능하답니다.</span>
+    </span>
+</div>
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+<script th:inline="javascript">
+ $(function () {
+    $('#findEmail').on('click', function () {
+         var email = $('#friendEmail').val();
+                       $.ajax({
+                           type: 'GET',
+                           url: '/findEmail?query='+email
+                           //dataType: 'json'
+                           //contentType:'application/json; charset=utf-8',
+                           }).done(function(res, textStatus, xhr) {
+                               if(xhr.status == '200'){
+                                $("#resultDiv").replaceWith(res);
+                               }
+                           }).fail(function (error) {
+                               alert(error.responseJSON.error.message);
+                           });
+      });
+  });
+
+</script>
+</th:block>
+</body>
+</html>

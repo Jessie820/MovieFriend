@@ -26,6 +26,7 @@ public class Recommendation extends BaseEntity{
 
     private long userHeart;
 
+    @Column(length = 1000)
     private String comment;
     private String recipientName;
     private Long recipientId;
