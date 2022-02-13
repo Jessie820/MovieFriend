@@ -29,7 +29,7 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
          <button type="button" id="returnEmail" class="btn btn-primary">이메일 확인</button>
         <br/>
     <span style="color:#69a5d6; font-weight:500">검색결과가 없다면 추천자의 이름을 직접 입력해주세요.</span><br/>
-        <span style="color:#69a5d6; font-weight:500">영화친구가 아니더라도 카카오톡 공유가 가능하답니다.</span>
+        <span style="color:#69a5d6; font-weight:500">영화친구가 아니더라도 추천내용을 카카오톡으로 공유할 수 있답니다.</span>
     </span>
 </div>
 <!-- 사용자 스크립트 추가 -->
@@ -51,6 +51,13 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
                                alert(error.responseJSON.error.message);
                            });
       });
+
+      $('#returnEmail').on('click', function () {
+            var friendEmail = $('#friendEmail').val();
+            window.opener.document.getElementById('recipientName').value = friendEmail;
+            window.close();
+       });
+
   });
 
 </script>
