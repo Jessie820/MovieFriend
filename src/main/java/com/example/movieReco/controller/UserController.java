@@ -55,16 +55,23 @@ public class UserController extends UiUtils {
     }
 
     @PostMapping(value = "/signup")
-    public String signUp(MemberDetail memberDetail, BindingResult result){
-        Member member = new Member();
-        member.setBirthDate(memberDetail.getBirthDate());
-        member.setGender(memberDetail.getGender());
-        member.setEmail(memberDetail.getUsername());
-        member.setPassword(memberDetail.getPassword());
-        member.setAuth("USER");
-        member.setHeart(100L);
-        userService.joinUser(member);
-        return "redirect:/login";
+    public String signUp(MemberDetail memberDetail, Model model, BindingResult result){
+        try {
+            Member member = new Member();
+            member.setBirthDate(memberDetail.getBirthDate());
+            member.setGender(memberDetail.getGender());
+            member.setEmail(memberDetail.getUsername());
+            member.setPassword(memberDetail.getPassword());
+            member.setAuth("USER");
+            member.setHeart(100L);
+            userService.joinUser(member);
+        }catch(Exception e){
+            MemberDetail memberDetial = new MemberDetail();
+            memberDetial.setBirthDate(LocalDate.now());
+            model.addAttribute("memberDetail", memberDetial);
+            return showMessageWithRedirect("회원가입에 실패했습니다. 다시 가입해주세요.", "/signup", Method.GET, null, model);
+        }
+        return showMessageWithRedirect("회원가입에 성공했습니다. 로그인 페이지로 돌아갑니다.", "/login", Method.GET, null, model);
     }
 
     @GetMapping(value = "/")
