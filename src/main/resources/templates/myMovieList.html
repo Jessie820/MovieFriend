@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" integrity="sha384-
+ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="/css/jumbotron-narrow.css" rel="stylesheet">
+</head>
+<nav th:replace="common :: menu"></nav>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<div class="container">
+
+    <div class="row">
+        <div class="col">
+            <ul class="nav nav-tabs mt-5" id="myTabs">
+                <li class="nav-item"><a href="#tab1" data-url="/myRecommendList" class="nav-link active" id="tab1_link">Tab1</a></li>
+                <li class="nav-item" ><a href="#tab2" data-url="/recommendedList" class="nav-link" id="tab2_link">Tab2</a></li>
+            </ul>
+
+            <div class="tab-content pt-3 projects">
+                <div class="tab-pane active" id="tab1">Active panel</div>
+                <div class="tab-pane" id="tab2"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        $('#myTabs a').click(function (e) {
+            var url = $(this).attr("data-url");
+            var href = this.hash;
+            var pane = $(this);
+
+            // ajax load from data-url
+            $(href).load(url);
+            $('.tab-pane').hide();
+            $('#myTabs a').removeClass('active');
+            $(href).show();
+            $(href+'_link').addClass('active');
+        });
+
+    // load first tab content
+    $('#tab1').load($('.nav-link.active').attr("data-url"), function (result) {
+    });
+    </script>
+</th:block>
+</html>

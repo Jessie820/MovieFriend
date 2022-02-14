@@ -159,6 +159,18 @@ public class MovieController {
     }
 
     //내가 추천한 내역 보여주기
+    @GetMapping("/myMovieList")
+    public String getMovieList(Model model, Authentication authentication){
+        //현재 로그인 된 사용자 정보 가져오기
+//        MemberDetail memberDetail = (MemberDetail)authentication.getPrincipal();
+//        Member member = Member.createMember(memberDetail);
+//        getMemberCurInfo(memberDetail);
+//        List<Recommendation> recommendItems = recommendService.findMyRecommendations(member);
+//        model.addAttribute("recommendItems", recommendItems);
+        return "myMovieList";
+    }
+
+    //내가 추천한 내역 보여주기
     @GetMapping("/myRecommendList")
     public String getMyRecommendList(Model model, Authentication authentication){
         //현재 로그인 된 사용자 정보 가져오기
@@ -168,5 +180,12 @@ public class MovieController {
         List<Recommendation> recommendItems = recommendService.findMyRecommendations(member);
         model.addAttribute("recommendItems", recommendItems);
         return "myRecommendList";
+    }
+
+    //내가 추천한 내역 보여주기
+    @GetMapping("/recommendedList")
+    public String getRecommendedList(Model model, Authentication authentication){
+
+        return "recommendedList";
     }
 }
