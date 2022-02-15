@@ -67,4 +67,7 @@ public class RecommendService {
         return recommendRepository.findRecommendationsByMember(member);
     }
 
+    public List<Recommendation> findRecommendationsForMember(Member member){
+        return recommendRepository.findRecommendationsForMember(member);
+    }
 }

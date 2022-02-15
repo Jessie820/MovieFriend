@@ -18,6 +18,26 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 <div class="container">
     <div id = "list" style="margin:50px">
         <span sec:authentication="name"></span>님이 추천받은 영화들입니다.
+        <table class="table table-striped">
+            <tr>
+                <td>제목</td>
+                <td>감독</td>
+                <td>너가 준 하트</td>
+                <td>내가 준 하트</td>
+                <td>추천한 친구</td>
+                <td>이미지</td>
+            </tr>
+            <tr th:each="rItem : ${recommendItems}">
+                <td th:text="${rItem.movie.title}"></td>
+                <td th:text="${rItem.movie.director}"></td>
+                <td th:text="${rItem.userHeart}"></td>
+                <td th:text="${rItem.recipientHeart}"></td>
+                <td th:text="${rItem.member.email}"></td>
+                <td>
+                    <img th:src="@{${rItem.movie.imageLink}}" />
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
 </body>

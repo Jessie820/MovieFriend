@@ -40,6 +40,14 @@ public class RecommendRepository {
         return query1.getResultList();
     }
 
+    public List<Recommendation> findRecommendationsForMember(Member member){
+        TypedQuery<Recommendation> query1
+                =  em.createQuery("select r from Recommendation r " +
+                "where r.recipientEmail = :email", Recommendation.class);
+        query1.setParameter("email",member.getEmail());
+        return query1.getResultList();
+    }
+
     public Recommendation find(Long id){
         return em.find(Recommendation.class, id);
     }

@@ -125,6 +125,7 @@ public class MovieController {
     public Long saveRecommendation(MovieRecommendForm mrf, Movie movie, Member member){
         Recommendation recommendation = new Recommendation();
         recommendation.setMember(member);
+        recommendation.setRecipientEmail(mrf.getRecipientName());//임시
         recommendation.setRecipientName(mrf.getRecipientName());
         recommendation.setComment(mrf.getComment());
         recommendation.setMovie(movie);
@@ -182,10 +183,14 @@ public class MovieController {
         return "myRecommendList";
     }
 
-    //내가 추천한 내역 보여주기
+    //내가 추천받은 내역 보여주기
     @GetMapping("/recommendedList")
     public String getRecommendedList(Model model, Authentication authentication){
-
+        //현재 로그인 된 사용자 정보 가져오기
+        MemberDetail memberDetail = (MemberDetail)authentication.getPrincipal();
+        Member member = Member.createMember(memberDetail);
+        List<Recommendation> recommendItems = recommendService.findRecommendationsForMember(member);
+        model.addAttribute("recommendItems", recommendItems);
         return "recommendedList";
     }
 }
