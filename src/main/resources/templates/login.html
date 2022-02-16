@@ -3,6 +3,7 @@
 <head>
     <title>Login page</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/bootstrap.min.css" integrity="sha384-
 ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
@@ -35,6 +36,26 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
             font-size: 250%;
             font-weight: bold;
         }
+
+        @media (max-width: 767px){
+            //모바일
+            .textbox{
+                width: 90%;
+                padding: 20px;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991px) {
+            // 테블릿 세로
+        }
+
+        @media (min-width: 992px) and (max-width: 1199px) {
+            // 테블릿 가로
+        }
+
+        @media (min-width: 1200px) {
+            // 데스크탑 일반
+        }
     </style>
 </head>
 <body>
@@ -47,9 +68,9 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
     <form action="/login" method="post">
         <div class="up-part">
             <label for="username">Username</label>:
-            <input type="text" id="username" name="username" autofocus="autofocus" style="margin:10px"/> <br />
+            <input type="text" id="username" name="username" autofocus="autofocus" style="margin:10px" class="textbox"/> <br />
             <label for="password">Password</label>:
-            <input type="password" id="password" name="password" style="margin:0px 0px 10px 7px"/> <br />
+            <input type="password" id="password" name="password" style="margin:0px 0px 10px 7px" class="textbox"/> <br />
         </div>
         <div class="down-part">
             <div class="left-box"></div>
