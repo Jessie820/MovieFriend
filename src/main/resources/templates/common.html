@@ -1,17 +1,32 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/poppe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+    <style th:inline="text">
+       @media (max-width: 767px){
+            //모바일
+        .navbar-nav {
+             padding-top: 45px;
+             padding-bottom: 45px;
+          }
+        }
+    </style>
+</head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" th:fragment="menu">
-    <a class="navbar-brand" href="#"> 영화 추천해주는 친구 </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
+    <div class="navbar-header">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault"
+                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">영화친구</a>
+    </div>
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
+        <ul class="nav navbar-nav mr-auto">
             <li class="nav-item" th:classappend="${menu} == 'home'? 'active'">
                 <a class="nav-link" href="#" th:href="@{/movies}">영화검색 <span class="sr-only"
                                                                     th:if="${menu} == 'home'">(current)</span></a>
@@ -24,19 +39,30 @@
                 <a class="nav-link" href="#" sec:authorize="isAuthenticated()" th:href="@{/myInfo}">내 정보<span class="sr-only"
                                                                                                                          th:if="${menu} == 'myinfo'">(current)</span></a>
             </li>
+            <li class="nav-item">
+                 <a class="nav-link btn btn-secondary mr-2 my-2 my-sm-0" th:href="@{/signup}" sec:authorize="!isAuthenticated()">register</a>
+            &nbsp;</li>
+            <li class="nav-item">
+                <a class="nav-link btn btn-secondary my-2 my-sm-0" th:href="@{/login}" sec:authorize="!isAuthenticated()">login</a> <!-- 로그인이 안된 경우  -->
+            </li>
+            <li class="nav-item">
+                <span class="nav-link text-white" sec:authorize="isAuthenticated()" th:text="${#authentication.getPrincipal().getHeart()} + '♥'"></span>
+            </li>
+            <li class="nav-item">
+                <form class="nav-link form-inline my-2 my-lg-0" th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                    <span class="text-white mr-2 mx-2" sec:authentication="name"></span>
+                    <!--            <span class="text-white mr-2 mx-2" sec:authentication="principal.authorities">권한</span>-->
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">logout</button>
+                </form>
+            </li>
         </ul>
-        <a class="btn btn-secondary mr-2 my-2 my-sm-0" th:href="@{/signup}" sec:authorize="!isAuthenticated()">register</a>
-     &nbsp;
-        <a class="btn btn-secondary my-2 my-sm-0" th:href="@{/login}" sec:authorize="!isAuthenticated()">login</a> <!-- 로그인이 안된 경우  -->
-        <span class="text-white" sec:authorize="isAuthenticated()" th:text="${#authentication.getPrincipal().getHeart()}"></span><span class="text-white">♥</span>
-
-        <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
-            <span class="text-white mr-2 mx-2" sec:authentication="name"></span>
-<!--            <span class="text-white mr-2 mx-2" sec:authentication="principal.authorities">권한</span>-->
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">logout</button>
-        </form>
     </div>
 </nav>
 </body>
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
 
+    </script>
+</th:block>
 </html>
