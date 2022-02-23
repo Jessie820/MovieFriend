@@ -70,6 +70,21 @@ $(function () {
   }
 
   function chkValidation(){
+    //생년월일 값 체크
+    var birthDate = $('#birthDate').val();
+    if(!birthDate){
+        alert('생년월일을 입력해야 합니다.');
+    }else if(isNaN(Date.parse(birthDate))){
+        alert('유효한 생년월일을 입력해야 합니다.');
+    }
+
+    //성별 값 체크
+     var gender = $('#gender').val();
+     if(!gender){
+        alert('성별을 입력해야 합니다.');
+     }
+
+    //비밀번호 값 체크
     var password = $('#password').val();
     if(!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(password)){
         alert('숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다.');
