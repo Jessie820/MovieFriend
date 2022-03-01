@@ -29,6 +29,7 @@ public class RecoSaved {
         userHeart = recommendation.getUserHeart();
         recommender = new MemberDto(recommendation.getMember());
         recommendId = recommendation.getId();
+        recipientHeart = recommendation.getRecipientHeart();
     }
 
     @Data
