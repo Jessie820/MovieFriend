@@ -20,7 +20,7 @@
  }
 </style>
 <body>
-<div class="container" style="margin-top:50px">
+<div class="container" style="margin-top:55px">
     <form role="form" action="/movies/recommendMovie" th:object="${movieRecommendForm}"
           onsubmit="return chkValidation()" method="post">
         <div class="form-group">
@@ -36,9 +36,10 @@
         </div>
         <br/>
         <div class="form-group">
-            <label th:for="director">배우</label>
-            <div th:text="${movieRecommendForm.actor}" class="form-control"></div>
-            <input th:name="actor" th:value="${movieRecommendForm.actor}" type="hidden"/>
+            <label th:for="actor">배우</label>
+<!--            <div th:if="${movieRecommendForm.actor} != ''" th:name="actor" th:value="${movieRecommendForm.actor}" th:text="${movieRecommendForm.actor}" class="form-control"></div>-->
+<!--            <input th:if="${movieRecommendForm.actor} == ''" th:name="actor" th:value="${movieRecommendForm.actor}" style="min-width:300px" placeholder="배우정보를 입력해주세요"/>-->
+            <input th:name="actor" th:value="${movieRecommendForm.actor}" style="min-width:300px"/>
         </div>
         <br/>
         <div class="form-group">

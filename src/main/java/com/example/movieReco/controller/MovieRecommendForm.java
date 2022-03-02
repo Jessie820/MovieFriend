@@ -90,4 +90,12 @@ public class MovieRecommendForm {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
+    public String getActor() {
+        return actor;
+    }
+
+    public void setActor(String actor) {
+        this.actor = actor;
+    }
 }
