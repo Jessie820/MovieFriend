@@ -4,6 +4,7 @@ public class RecoDetail {
     private String movieId;
     private String title;
     private String director;
+    private String actor;
     private long userHeart;
     private String imageLink;
 
@@ -45,5 +46,13 @@ public class RecoDetail {
 
     public void setUserHeart(long userHeart) {
         this.userHeart = userHeart;
+    }
+
+    public String getActor() {
+        return actor;
+    }
+
+    public void setActor(String actor) {
+        this.actor = actor;
     }
 }

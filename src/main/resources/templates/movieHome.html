@@ -15,6 +15,20 @@
           //모바일
 
         }
+
+        #list{
+            overflow:auto;
+        }
+
+        #listTable{
+
+        }
+
+       #listTable th{
+        position: sticky;
+        top: 0px;
+       }
+
     </style>
 </head>
 <nav th:replace="common :: menu"></nav>
@@ -23,29 +37,31 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <div class="container">
-    <div style="margin:10px">
+    <div style="margin:20px">
     <p>찾고자 하는 영화이름을 디테일하게 적어주세요.</p>
 
     <input type="text" id="keyword" name="name" placeholder="영화제목을 입력하세요">
     <button type="button" class="btn btn-info" id="btn-movies-search">검색</button>
     </div>
     <div id = "list">
-        <table class="table table-striped">
+        <table id="listTable" class="table table-striped">
             <tr>
-                <td>제목</td>
-                <td>감독</td>
-                <td>평점</td>
-                <td style="display:none;">링크</td>
-                <td>ID</td>
-                <td>이미지</td>
-                <td>추천</td>
+                <th>제목</th>
+                <th>감독</th>
+                <th>평점</th>
+                <th style="display:none;">링크</th>
+                <th style="display:none;">ID</th>
+                <th>배우</th>
+                <th>이미지</th>
+                <th>추천</th>
             </tr>
             <tr th:each="movie : ${movieItems}">
                 <td th:text="${movie.title}"></td>
                 <td th:text="${movie.director}"></td>
                 <td th:text="${movie.userRating}"></td>
                 <td style="display:none;" th:text="${movie.link}"></td>
-                <td th:text="${movie.movieId}"></td>
+                <td style="display:none;" th:text="${movie.movieId}"></td>
+                <td th:text="${movie.actor}"></td>
                 <td>
                     <img th:src="@{${movie.image}}" />
                 </td>
@@ -53,6 +69,7 @@
                         <form th:action="@{'/movies/recoNew'}" th:object="${recoDetail}" th:method="POST">
                             <input th:name="title" th:value="${movie.title}" type="hidden"/>
                             <input th:name="director" th:value="${movie.director}" type="hidden"/>
+                            <input th:name="actor" th:value="${movie.actor}" type="hidden"/>
                             <input th:name="userRating" th:value="${movie.userRating}" type="hidden"/>
                             <input th:name="link" th:value="${movie.link}" type="hidden"/>
                             <input th:name="imageLink" th:value="${movie.image}" type="hidden"/>

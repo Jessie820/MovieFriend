@@ -24,6 +24,8 @@ public class Movie {
     @Column(name = "RATING")
     private float rating;
 
+    private String actor;
+
     private String imageLink;
 
     @Column(name = "RECOMMEND_CNT")

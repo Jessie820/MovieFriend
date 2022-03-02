@@ -6,6 +6,7 @@ public class MovieRecommendForm {
     public String movieId;
     public String title;
     public String director;
+    public String actor;
     // @NotEmpty(message = "추천 이유는 필수 입니다")
     public String comment;
     public String releasesDate;
@@ -21,6 +22,7 @@ public class MovieRecommendForm {
         this.movieId = recoDetail.getMovieId();
         this.title = recoDetail.getTitle();
         this.director = recoDetail.getDirector();
+        this.actor = recoDetail.getActor();
         this.imageLink = recoDetail.getImageLink();
         this.userHeart = recoDetail.getUserHeart();
     }
