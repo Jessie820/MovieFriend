@@ -39,8 +39,37 @@
 <div class="container">
     <div style="margin:20px">
     <p>찾고자 하는 영화이름을 디테일하게 적어주세요.</p>
-
-    <input type="text" id="keyword" name="name" placeholder="영화제목을 입력하세요">
+        <span>영화제목</span>
+    <input type="text" id="title" name="title" placeholder="영화제목을 입력하세요">
+        <span style="margin-left:10px">영화장르</span>
+        <select class="select_type01 w170" id="genre" name="genre">
+            <option th:value="0" th:text="전체"></option>
+            <option th:value="1" th:text="드라마"></option>
+            <option th:value="2" th:text="판타지"></option>
+            <option th:value="3" th:text="서부"></option>
+            <option th:value="4" th:text="공포"></option>
+            <option th:value="5" th:text="로맨스"></option>
+            <option th:value="6" th:text="모험"></option>
+            <option th:value="7" th:text="스릴러"></option>
+            <option th:value="8" th:text="느와르"></option>
+            <option th:value="9" th:text="컬트"></option>
+            <option th:value="10" th:text="다큐멘터리"></option>
+            <option th:value="11" th:text="코미디"></option>
+            <option th:value="12" th:text="가족"></option>
+            <option th:value="13" th:text="미스터리"></option>
+            <option th:value="14" th:text="전쟁"></option>
+            <option th:value="15" th:text="애니메이션"></option>
+            <option th:value="16" th:text="범죄"></option>
+            <option th:value="17" th:text="뮤지컬"></option>
+            <option th:value="18" th:text="SF"></option>
+            <option th:value="22" th:text="서스펜스"></option>
+            <option th:value="23" th:text="서사"></option>
+            <option th:value="24" th:text="블랙코미디"></option>
+            <option th:value="25" th:text="실험"></option>
+            <option th:value="26" th:text="영화카툰"></option>
+            <option th:value="27" th:text="영화음악"></option>
+            <option th:value="28" th:text="영화패러디포스터"></option>
+        </select>
     <button type="button" class="btn btn-info" id="btn-movies-search">검색</button>
     </div>
     <div id = "list">
@@ -90,10 +119,11 @@
     <script th:inline="javascript">
 $(function () {
     $('#btn-movies-search').on('click', function () {
-                var keyword = $('#keyword').val();
+                var title = $('#title').val();
+                var genre = $('#genre').val();
                        $.ajax({
                            type: 'GET',
-                           url: '/movies/search?query='+keyword
+                           url: '/movies/search?title='+title+'&genre='+genre
                            //dataType: 'json'
                            //contentType:'application/json; charset=utf-8',
                            }).done(function(res, textStatus, xhr) {

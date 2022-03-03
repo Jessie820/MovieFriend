@@ -45,13 +45,14 @@ public class MovieController {
     }
 
     @GetMapping("/movies/search")
-    public String searchMovie(Model model, @RequestParam(value="query") String keyword){
-       if(!StringUtils.hasText(keyword)){
+    public String searchMovie(Model model, @RequestParam(value="title") String title
+                                            ,@RequestParam(value="genre") String genre){
+       if(!StringUtils.hasText(title)){
            throw new EmptyInputException("데이터를 입력해주세요.");
        }
 
        log.info("Naver Movie Search");
-       NaverMovieItem[] movieItems = NaverMovieService.findByKeyword(keyword).getItems();
+       NaverMovieItem[] movieItems = NaverMovieService.findByKeyword(title, genre).getItems();
        if(movieItems.length == 0){
            throw new NoResultException("영화 검색결과가 없습니다.");
        }

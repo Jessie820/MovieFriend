@@ -21,9 +21,9 @@ public class NaverMovieService {
 
     //페이지네이션을 위해 start를 지정해야 함
 
-    private static final String OpenNaverMovieUrl_getMovies ="https://openapi.naver.com/v1/search/movie.json?query={keyword}&display=20$start=1";
+    private static final String OpenNaverMovieUrl_getMovies ="https://openapi.naver.com/v1/search/movie.json?query={title}&genre={genre}&display=20$start=1";
 
-    static public NaverMovie findByKeyword(String keyword){
+    static public NaverMovie findByKeyword(String title, String genre){
         NaverMovie mv = new NaverMovie();
         final HttpHeaders headers = new HttpHeaders(); // 헤더에 key들을 담아준다.
         headers.set("X-Naver-Client-Id", CLIENT_ID);
@@ -32,7 +32,7 @@ public class NaverMovieService {
         HashMap<String, Object> result = new HashMap<String, Object>();
         String jsonInString = "";
         try {
-            ResponseEntity<Map> resultMap  = restTemplate.exchange(OpenNaverMovieUrl_getMovies, HttpMethod.GET, entity, Map.class, keyword);
+            ResponseEntity<Map> resultMap  = restTemplate.exchange(OpenNaverMovieUrl_getMovies, HttpMethod.GET, entity, Map.class, title);
             result.put("statusCode", resultMap.getStatusCodeValue()); //http status code를 확인
             result.put("header", resultMap.getHeaders()); //헤더 정보 확인
             result.put("body", resultMap.getBody()); //실제 데이터 정보 확인
@@ -55,7 +55,11 @@ public class NaverMovieService {
             System.out.println(e.toString());
         }
 
-        NaverMovie naverMovie = restTemplate.exchange(OpenNaverMovieUrl_getMovies, HttpMethod.GET, entity, NaverMovie.class, keyword).getBody();
+        if("0".equals(genre)){
+            genre="";
+        }
+
+        NaverMovie naverMovie = restTemplate.exchange(OpenNaverMovieUrl_getMovies, HttpMethod.GET, entity, NaverMovie.class, title, genre).getBody();
         NaverMovie.modifyNaverMovie(naverMovie);
         return naverMovie;
     }
