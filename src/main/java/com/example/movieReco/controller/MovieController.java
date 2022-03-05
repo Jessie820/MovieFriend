@@ -52,7 +52,7 @@ public class MovieController {
        }
 
        log.info("Naver Movie Search");
-       NaverMovieItem[] movieItems = NaverMovieService.findByKeyword(title, genre).getItems();
+       NaverMovieItem[] movieItems = NaverMovieService.findByKeyword(title, genre, "1").getItems();
        if(movieItems.length == 0){
            throw new NoResultException("영화 검색결과가 없습니다.");
        }

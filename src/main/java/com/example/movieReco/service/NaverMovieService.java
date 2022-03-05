@@ -21,9 +21,9 @@ public class NaverMovieService {
 
     //페이지네이션을 위해 start를 지정해야 함
 
-    private static final String OpenNaverMovieUrl_getMovies ="https://openapi.naver.com/v1/search/movie.json?query={title}&genre={genre}&display=20$start=1";
+    private static final String OpenNaverMovieUrl_getMovies ="https://openapi.naver.com/v1/search/movie.json?query={title}&display=20&start={start}&genre={genre}";
 
-    static public NaverMovie findByKeyword(String title, String genre){
+    static public NaverMovie findByKeyword(String title, String genre, String start){
         NaverMovie mv = new NaverMovie();
         final HttpHeaders headers = new HttpHeaders(); // 헤더에 key들을 담아준다.
         headers.set("X-Naver-Client-Id", CLIENT_ID);
@@ -31,8 +31,13 @@ public class NaverMovieService {
         final HttpEntity<String> entity = new HttpEntity<>(headers);
         HashMap<String, Object> result = new HashMap<String, Object>();
         String jsonInString = "";
+
+        if("0".equals(genre)){
+            genre="";
+        }
+
         try {
-            ResponseEntity<Map> resultMap  = restTemplate.exchange(OpenNaverMovieUrl_getMovies, HttpMethod.GET, entity, Map.class, title);
+            ResponseEntity<Map> resultMap  = restTemplate.exchange(OpenNaverMovieUrl_getMovies, HttpMethod.GET, entity, Map.class, title, start, genre);
             result.put("statusCode", resultMap.getStatusCodeValue()); //http status code를 확인
             result.put("header", resultMap.getHeaders()); //헤더 정보 확인
             result.put("body", resultMap.getBody()); //실제 데이터 정보 확인
@@ -55,11 +60,8 @@ public class NaverMovieService {
             System.out.println(e.toString());
         }
 
-        if("0".equals(genre)){
-            genre="";
-        }
 
-        NaverMovie naverMovie = restTemplate.exchange(OpenNaverMovieUrl_getMovies, HttpMethod.GET, entity, NaverMovie.class, title, genre).getBody();
+        NaverMovie naverMovie = restTemplate.exchange(OpenNaverMovieUrl_getMovies, HttpMethod.GET, entity, NaverMovie.class, title, start, genre).getBody();
         NaverMovie.modifyNaverMovie(naverMovie);
         return naverMovie;
     }

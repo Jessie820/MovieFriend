@@ -16,7 +16,8 @@
 
         }
 
-        #container{
+        #list{
+            height: 65vh;
             overflow:auto;
         }
 
@@ -24,9 +25,14 @@
 
         }
 
+        th, td {
+          text-align: center;
+        }
+
        #listTable th{
+        background-color: rgba(103,182,237,1);
         position: sticky;
-        top: 0px;
+        top: 0;
        }
 
     </style>
@@ -37,8 +43,8 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <div class="container">
-    <div style="margin:20px">
-    <p>찾고자 하는 영화이름을 디테일하게 적어주세요.</p>
+    <div style="margin-top:60px; margin-bottom:10px">
+    <p style="color:#69a5d6; font-weight:800; font-size:large">추천하고자 하는 영화정보를 검색해보세요.</p>
         <span>영화제목</span>
     <input type="text" id="title" name="title" placeholder="영화제목을 입력하세요">
         <span style="margin-left:10px">영화장르</span>
@@ -74,42 +80,47 @@
     </div>
     <div id = "list">
         <table id="listTable" class="table table-striped">
-            <tr>
-                <th>제목</th>
-                <th>감독</th>
-                <th>평점</th>
-                <th style="display:none;">링크</th>
-                <th style="display:none;">ID</th>
-                <th>배우</th>
-                <th>이미지</th>
-                <th>추천</th>
-            </tr>
-            <tr th:each="movie : ${movieItems}">
-                <td th:text="${movie.title}"></td>
-                <td th:text="${movie.director}"></td>
-                <td th:text="${movie.userRating}"></td>
-                <td style="display:none;" th:text="${movie.link}"></td>
-                <td style="display:none;" th:text="${movie.movieId}"></td>
-                <td th:text="${movie.actor}"></td>
-                <td>
-                    <img th:src="@{${movie.image}}" />
-                </td>
+            <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>감독</th>
+                    <th>평점</th>
+                    <th style="display:none;">링크</th>
+                    <th style="display:none;">ID</th>
+                    <th>배우</th>
+                    <th>이미지</th>
+                    <th>추천</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="maindata" th:each="movie : ${movieItems}">
+                    <td th:text="${movie.title}"></td>
+                    <td th:text="${movie.director}"></td>
+                    <td th:text="${movie.userRating}"></td>
+                    <td style="display:none;" th:text="${movie.link}"></td>
+                    <td style="display:none;" th:text="${movie.movieId}"></td>
+                    <td th:text="${movie.actor}"></td>
                     <td>
-                        <form th:action="@{'/movies/recoNew'}" th:object="${recoDetail}" th:method="POST">
-                            <input th:name="title" th:value="${movie.title}" type="hidden"/>
-                            <input th:name="director" th:value="${movie.director}" type="hidden"/>
-                            <input th:name="actor" th:value="${movie.actor}" type="hidden"/>
-                            <input th:name="userRating" th:value="${movie.userRating}" type="hidden"/>
-                            <input th:name="link" th:value="${movie.link}" type="hidden"/>
-                            <input th:name="imageLink" th:value="${movie.image}" type="hidden"/>
-                            <input th:name="movieId" th:value="${movie.movieId}" type="hidden"/>
-                        <button type="submit">추천하기</button>
-                        <input type="hidden"
-                               th:name="${_csrf.parameterName}"
-                               th:value="${_csrf.token}" />
-                        </form>
+                        <img th:src="@{${movie.image}}" />
                     </td>
-            </tr>
+                        <td>
+                            <form th:action="@{'/movies/recoNew'}" th:object="${recoDetail}" th:method="POST">
+                                <input th:name="title" th:value="${movie.title}" type="hidden"/>
+                                <input th:name="director" th:value="${movie.director}" type="hidden"/>
+                                <input th:name="actor" th:value="${movie.actor}" type="hidden"/>
+                                <input th:name="userRating" th:value="${movie.userRating}" type="hidden"/>
+                                <input th:name="link" th:value="${movie.link}" type="hidden"/>
+                                <input th:name="imageLink" th:value="${movie.image}" type="hidden"/>
+                                <input th:name="movieId" th:value="${movie.movieId}" type="hidden"/>
+                            <button type="submit">추천하기</button>
+                            <input type="hidden"
+                                   th:name="${_csrf.parameterName}"
+                                   th:value="${_csrf.token}" />
+                            </form>
+                        </td>
+                </tr>
+                <tr id="moredata" style="display:none"><td colspan='8'><button class="btn btn-primary" onclick="getMoreData()">+</button></td></tr>
+            </tbody>
         </table>
     </div>
 </div>
@@ -117,10 +128,14 @@
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
     <script th:inline="javascript">
-$(function () {
+    let startId = 1;
+    let title = '';
+    let genre = '';
+
     $('#btn-movies-search').on('click', function () {
-                var title = $('#title').val();
-                var genre = $('#genre').val();
+                title = $('#title').val();
+                genre = $('#genre').val();
+
                        $.ajax({
                            type: 'GET',
                            url: '/movies/search?title='+title+'&genre='+genre
@@ -129,6 +144,8 @@ $(function () {
                            }).done(function(res, textStatus, xhr) {
                                if(xhr.status == '200'){
                                 $("#list").replaceWith(res);
+                                $('#moredata').show();
+                                startId = 21;
                                }
                               // alert(JSON.stringify(res));
                            }).fail(function (error) {
@@ -136,9 +153,52 @@ $(function () {
                            });
       });
 
+      const TABLE_ELE = document.querySelector("listTable");
 
+    function drawList(DATA){
+        var listHtml = "";
+        DATA.forEach((item, index) => {
+            //const TR_ELE = document.createElement('tr');
 
-  });
+            var movtitle = item.title;
+
+            listHtml = `<tr><td>${item.title}</td>
+                        <td>${item.director}</td>
+                        <td>${item.userRating}</td>
+                        <td style="display:none;">${item.link}</td>
+                        <td style="display:none;">${item.movieId}</td>
+                        <td>${item.actor}</td>
+                        <td><img src="${item.image}"/></td>
+                        <td><button onClick="recommendMovie()">추천하기</button></td></tr>`;
+
+            if (index === (DATA.length - 1)) startId = startId + DATA.length; // 마지막건 ID 저장
+           // TR_ELE.innerHtml = listHtml;
+            $("#moredata").before(listHtml);
+            //TABLE_ELE.appendChild(TR_ELE);
+        });
+    }
+
+      function getMoreData(){
+          $.ajax({
+                           type: 'GET',
+                           url: '/movies/searchMore?title='+title+'&genre='+genre+'&start='+startId
+                           //dataType: 'json'
+                           //contentType:'application/json; charset=utf-8',
+                           }).done(function(res, textStatus, xhr) {
+                                drawList(res);
+                              // alert(JSON.stringify(res));
+                           }).fail(function (error) {
+                              alert(error.responseJSON.error.message);
+                           });
+      }
+
+    function recommendMovie(item){
+        alert("test");
+        alert(item);
+        alert(JSON.stringify(item));
+       // alert(item.title);
+    }
+
 </script>
 </th:block>
 </html>
