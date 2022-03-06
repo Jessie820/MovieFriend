@@ -25,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -61,18 +62,40 @@ public class MovieController {
         return "movieHome :: #list";
     }
 
-    //영화 추천하는 페이지 호출(Post로 넘기면서 redirect 안해도 되나..?)
+    @GetMapping(value = "/recommendMovieForm")
+    public String getRecommendMovieForm() {
+        return "recommendMovieForm";
+    }
+
+    @GetMapping(value = "/recommendMovieForm2")
+    public String getRecommendMovieForm2(Model model, @RequestParam(value="title") String title
+                                                    , @RequestParam(value="director") String director
+                                                    , @RequestParam(value="actor") String actor
+                                                     , @RequestParam(value="image") String image
+                                                     , @RequestParam(value="movieId") String movieId){
+        MovieRecommendForm movieRecommendForm = new MovieRecommendForm();
+        movieRecommendForm.setTitle(title);
+        movieRecommendForm.setDirector(director);
+        movieRecommendForm.setActor(actor);
+        movieRecommendForm.setImageLink(image);
+        movieRecommendForm.setMovieId(movieId);
+        model.addAttribute("movieRecommendForm", movieRecommendForm);
+        return "recommendMovieForm";
+    }
+
+    //영화 추천하는 페이지 호출
     @PostMapping(value = "/movies/recoNew")
-    public String createRecoForm(RecoDetail recoDetail, Model model) {
+    public String createRecoForm(RecoDetail recoDetail, RedirectAttributes redirectAttrs) {
         log.info("movie title" + recoDetail.getTitle());
         log.info("movie director" + recoDetail.getDirector());
         log.info("movie movieId" + recoDetail.getMovieId());
         log.info("movie imageLink" + recoDetail.getImageLink());
 
         MovieRecommendForm movieRecommendForm = new MovieRecommendForm(recoDetail);
-        model.addAttribute("movieRecommendForm", movieRecommendForm);
+        //model.addAttribute("movieRecommendForm", movieRecommendForm);
+        redirectAttrs.addFlashAttribute("movieRecommendForm", movieRecommendForm);
 
-        return "recommendMovieForm";
+        return "redirect:/recommendMovieForm";
     }
 
     //추천받은 영화에 하트주기
