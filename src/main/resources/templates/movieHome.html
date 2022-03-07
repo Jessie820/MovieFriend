@@ -198,19 +198,11 @@
       }
 
     function recommendMovie(item){
-        alert(item.title);
-          $.ajax({
-            data : item
-            ,url : "/movies/redirect"
-            ,type : "GET"
-            ,success : function(data) {
-                window.location.href='/recommendMovieForm2?title='+encodeURI(item.title)
+          window.location.href='/recommendMovieForm2?title='+encodeURI(item.title)
                                         +'&director='+encodeURI(item.director)
                                         +'&actor='+encodeURI(item.actor)
                                         +'&image='+encodeURI(item.image)
                                         +'&movieId='+encodeURI(item.movieId)
-            }
-        });
     }
 
 </script>

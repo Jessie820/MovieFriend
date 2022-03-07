@@ -33,7 +33,7 @@ class RecommendRepositoryTest {
     @Test
     void save(){
         Member member = new Member();
-        member.setBirthDate("19900620");
+       // member.setBirthDate("19900620");
         member.setGender("FEMALE");
         member.setEmail("FEMALE@gmail.com");
         member.setPassword("1234");
