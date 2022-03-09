@@ -41,12 +41,12 @@ public class UserController extends UiUtils {
     @Value("${spring.mail.username}")
     private String from;
 
-    @GetMapping(value = "/signup")
+    @GetMapping(value = "/join")
     public String signUpForm(Model model){
         MemberDetail memberDetial = new MemberDetail();
         memberDetial.setBirthDate(LocalDate.now());
         model.addAttribute("memberDetail", memberDetial);
-        return "signup";
+        return "join";
     }
 
     @GetMapping(value = "/login")
@@ -54,7 +54,7 @@ public class UserController extends UiUtils {
         return "login";
     }
 
-    @PostMapping(value = "/signup")
+    @PostMapping(value = "/join")
     public String signUp(MemberDetail memberDetail, Model model, BindingResult result){
         try {
             Member member = new Member();
@@ -134,7 +134,7 @@ public class UserController extends UiUtils {
             MemberDetail curMemberDetail = (MemberDetail) authentication.getPrincipal();
             Member member = userService.find(curMemberDetail.getMemberId());
             member.setPassword(memberDetail.getPassword());
-            userService.joinUser(member);
+            //userService.joinUser(member);
         }catch(Exception e){
             model.addAttribute("memberDetail", new MemberDetail());
             return showMessageWithRedirect("비밀번호 재설정에 실패하였습니다.", "/resetPwd", Method.GET, null, model);

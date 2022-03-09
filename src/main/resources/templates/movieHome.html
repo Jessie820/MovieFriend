@@ -106,18 +106,7 @@
                         <img th:src="@{${movie.image}}" />
                     </td>
                         <td>
-                            <form th:action="@{'/movies/recoNew'}" th:object="${recoDetail}" th:method="POST">
-                                <input th:name="title" th:value="${movie.title}" type="hidden"/>
-                                <input th:name="director" th:value="${movie.director}" type="hidden"/>
-                                <input th:name="actor" th:value="${movie.actor}" type="hidden"/>
-                                <input th:name="userRating" th:value="${movie.userRating}" type="hidden"/>
-                                <input th:name="link" th:value="${movie.link}" type="hidden"/>
-                                <input th:name="imageLink" th:value="${movie.image}" type="hidden"/>
-                                <input th:name="movieId" th:value="${movie.movieId}" type="hidden"/>
-                            <button type="submit">추천하기</button>
-                            <input type="hidden"
-                                   th:name="${_csrf.parameterName}"
-                                   th:value="${_csrf.token}" />
+                            <button th:attr="onclick=|getRecommendationForm('${movie.title}','${movie.director}','${movie.actor}','${movie.image}','${movie.movieId}')|">추천하기</button>
                             </form>
                         </td>
                 </tr>
@@ -174,7 +163,7 @@
                         <td style="display:none;">${item.movieId}</td>
                         <td>${item.actor}</td>
                         <td><img src="${item.image}"/></td>
-                        <td><button onclick='recommendMovie(`+movieitem+`)'>추천하기</button></td></tr>`;
+                        <td><button onclick='getRecommendationForm2(`+movieitem+`)'>추천하기</button></td></tr>`;
 
             if (index === (DATA.length - 1)) startId = startId + DATA.length; // 마지막건 ID 저장
            // TR_ELE.innerHtml = listHtml;
@@ -197,13 +186,22 @@
                            });
       }
 
-    function recommendMovie(item){
-          window.location.href='/recommendMovieForm2?title='+encodeURI(item.title)
+    function getRecommendationForm(title, director, actor, image, movieId){
+        window.location.href='/recommendation-form?title='+encodeURI(title)
+                                        +'&director='+encodeURI(director)
+                                        +'&actor='+encodeURI(actor)
+                                        +'&image='+encodeURI(image)
+                                        +'&movieId='+encodeURI(movieId)
+    }
+
+    function getRecommendationForm2(item){
+          window.location.href='/recommendation-form?title='+encodeURI(item.title)
                                         +'&director='+encodeURI(item.director)
                                         +'&actor='+encodeURI(item.actor)
                                         +'&image='+encodeURI(item.image)
                                         +'&movieId='+encodeURI(item.movieId)
     }
+
 
 </script>
 </th:block>

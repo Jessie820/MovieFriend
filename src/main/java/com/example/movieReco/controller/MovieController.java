@@ -62,12 +62,8 @@ public class MovieController {
         return "movieHome :: #list";
     }
 
-    @GetMapping(value = "/recommendMovieForm")
-    public String getRecommendMovieForm() {
-        return "recommendMovieForm";
-    }
-
-    @GetMapping(value = "/recommendMovieForm2")
+    //영화 추천하는 페이지 호출
+    @GetMapping(value = "/recommendation-form")
     public String getRecommendMovieForm2(Model model, @RequestParam(value="title") String title
                                                     , @RequestParam(value="director") String director
                                                     , @RequestParam(value="actor") String actor
@@ -80,22 +76,7 @@ public class MovieController {
         movieRecommendForm.setImageLink(image);
         movieRecommendForm.setMovieId(movieId);
         model.addAttribute("movieRecommendForm", movieRecommendForm);
-        return "recommendMovieForm";
-    }
-
-    //영화 추천하는 페이지 호출
-    @PostMapping(value = "/movies/recoNew")
-    public String createRecoForm(RecoDetail recoDetail, RedirectAttributes redirectAttrs) {
-        log.info("movie title" + recoDetail.getTitle());
-        log.info("movie director" + recoDetail.getDirector());
-        log.info("movie movieId" + recoDetail.getMovieId());
-        log.info("movie imageLink" + recoDetail.getImageLink());
-
-        MovieRecommendForm movieRecommendForm = new MovieRecommendForm(recoDetail);
-        //model.addAttribute("movieRecommendForm", movieRecommendForm);
-        redirectAttrs.addFlashAttribute("movieRecommendForm", movieRecommendForm);
-
-        return "redirect:/recommendMovieForm";
+        return "recommendation-form";
     }
 
     //추천받은 영화에 하트주기
@@ -121,8 +102,8 @@ public class MovieController {
         movieService.saveMovie(movie);
 
         MemberDetail memberDetail = (MemberDetail) authentication.getPrincipal();
-        Member member = Member.createMember(memberDetail);
-        Long recoId = saveRecommendation(movieRecommendForm, movie, member);
+        Member curMember = Member.createMember(memberDetail);
+        Long recoId = saveRecommendation(movieRecommendForm, movie, curMember);
 
         //오늘 추천한 내역 업데이트
         long updatedHeart = memberDetail.getHeart() - movieRecommendForm.getUserHeart();
@@ -139,6 +120,7 @@ public class MovieController {
         //오늘 추천수가 3이면 100하트를 추가로 주기
         if(updatedRecommendCnt == 3){
             memberDetail.setHeart(memberDetail.getHeart()+100);
+            userService.updateHeart(memberDetail);
         }
         getMemberCurInfo(memberDetail);
 

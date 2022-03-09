@@ -31,6 +31,11 @@ public class UserService implements UserDetailsService {
         memberRepository.save(member);
     }
 
+    public void updateHeart(MemberDetail memberDetail){
+        Member member = memberRepository.find(memberDetail.getMemberId());
+        member.setHeart(memberDetail.getHeart());
+    }
+
     public void joinUser(Member member){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         member.setPassword(passwordEncoder.encode(member.getPassword()));
