@@ -46,7 +46,21 @@ class RecommendJpaRepositoryTest {
         List<Recommendation> content = page.getContent();
 
         assertEquals(content.size(), 4);
+    }
 
+    @Test
+    void findByIdLessThanAndMemberOrderByIdDesc() {
+        Member member = new Member();
+        member.setId(2l);
 
+        PageRequest pageRequest = PageRequest.of(0,3);
+        Page<Recommendation> page = recommendJpaRepository.findByIdLessThanAndMemberOrderByIdDesc(2l,member, pageRequest);
+        List<Recommendation> content = page.getContent();
+
+        for(Recommendation r : content){
+            System.out.println(r.getMovie().getTitle());
+        }
+
+        //assertEquals(content.size(), 4);
     }
 }

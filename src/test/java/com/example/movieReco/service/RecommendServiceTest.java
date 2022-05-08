@@ -10,7 +10,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
+//@ExtendWith(SpringExtension.class)
 @SpringBootTest
 class RecommendServiceTest {
 
@@ -44,7 +44,7 @@ class RecommendServiceTest {
         //db에서 다시 조회한 내역을 비교
         Member aftMember = userService.find(member.getId());
         Recommendation aftRecommendation = recommendService.find(recommendId);
-        
+
         assertEquals(0L, aftMember.getHeart());
         assertEquals(100, aftRecommendation.getUserHeart());
     }

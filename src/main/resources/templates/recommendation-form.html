@@ -44,7 +44,7 @@
         <br/>
         <div class="form-group">
             <label th:for="comment">추천이유</label>
-            <textarea cols="30" rows="5" maxlength="500" type="text" th:name="comment" th:value="${movieRecommendForm.comment}" th:text="${movieRecommendForm.comment}"  class="form-control"
+            <textarea id="comment" cols="30" rows="5" maxlength="500" type="text" th:name="comment" th:value="${movieRecommendForm.comment}" th:text="${movieRecommendForm.comment}"  class="form-control"
                    placeholder="추천이유를 입력하세요"/>
         </div>
         <br/>
@@ -71,6 +71,7 @@
             <input id="recipientName" type="text" th:name="recipientName" style="width:300px" th:value="${movieRecommendForm.recipientName}" th:text="${movieRecommendForm.recipientName}" class="form-control"
                    placeholder="추천해주고 싶은 사람을 입력하세요"/>&nbsp<button id="findFriend" type="button" class="btn btn-primary">영화친구에서 친구찾기</button>
             </div>
+        </div>
         <br/>
         <button type="submit" class="btn btn-primary">추천하기</button>
         <input type="hidden"
@@ -88,6 +89,13 @@
   });
 
   function chkValidation(){
+
+    //추천이유 값 체크
+    var comment = $('#comment').val();
+    if(!comment){
+        alert('추천이유를 입력해야 합니다.');
+    }
+
     //남은 하트 수 체크
     var curHeart = "[[${#authentication.getPrincipal().getHeart()}]]";
     var givenHeart = $('#userHeart').val();

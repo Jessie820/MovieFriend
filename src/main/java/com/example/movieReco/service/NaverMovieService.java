@@ -1,11 +1,9 @@
 package com.example.movieReco.service;
 
 import com.example.movieReco.mapper.NaverMovie;
+import com.example.movieReco.mapper.NaverMovieItem;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -60,9 +58,11 @@ public class NaverMovieService {
             System.out.println(e.toString());
         }
 
+        NaverMovie naverMovie = restTemplate.exchange(OpenNaverMovieUrl_getMovies, HttpMethod.GET, entity, NaverMovie.class, title, start, genre)
+                                            .getBody();
 
-        NaverMovie naverMovie = restTemplate.exchange(OpenNaverMovieUrl_getMovies, HttpMethod.GET, entity, NaverMovie.class, title, start, genre).getBody();
         NaverMovie.modifyNaverMovie(naverMovie);
+
         return naverMovie;
     }
 

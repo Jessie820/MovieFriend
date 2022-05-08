@@ -7,7 +7,6 @@ import com.example.movieReco.error.EmptyInputException;
 import com.example.movieReco.error.NoResultException;
 import com.example.movieReco.mapper.MemberDetail;
 import com.example.movieReco.mapper.NaverMovieItem;
-import com.example.movieReco.mapper.RecoDetail;
 import com.example.movieReco.mapper.RecoSaved;
 import com.example.movieReco.service.MovieService;
 import com.example.movieReco.service.NaverMovieService;
@@ -25,7 +24,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -122,7 +120,7 @@ public class MovieController {
             memberDetail.setHeart(memberDetail.getHeart()+100);
             userService.updateHeart(memberDetail);
         }
-        getMemberCurInfo(memberDetail);
+        updateMemberCurInfo(memberDetail);
 
         String recommendView = "redirect:/recommendation/";
         return (recommendView + recoId);
@@ -142,7 +140,7 @@ public class MovieController {
 
     //사용자 현재 정보 update
     @NotNull
-    private void getMemberCurInfo(MemberDetail memberDetail) {
+    private void updateMemberCurInfo(MemberDetail memberDetail) {
         Authentication newAuth = new UsernamePasswordAuthenticationToken(memberDetail, memberDetail.getPassword(), memberDetail.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(newAuth);
     }
@@ -176,14 +174,13 @@ public class MovieController {
 //        model.addAttribute("recommendItems", recommendItems);
         return "myMovieList";
     }
-
     //내가 추천한 내역 보여주기
     @GetMapping("/myRecommendList")
     public String getMyRecommendList(Model model, Authentication authentication){
         //현재 로그인 된 사용자 정보 가져오기
         MemberDetail memberDetail = (MemberDetail)authentication.getPrincipal();
         Member member = Member.createMember(memberDetail);
-        getMemberCurInfo(memberDetail);
+        updateMemberCurInfo(memberDetail);
         List<Recommendation> recommendItems = recommendService.findMyRecommendations(member);
         model.addAttribute("recommendItems", recommendItems);
         return "myRecommendList";

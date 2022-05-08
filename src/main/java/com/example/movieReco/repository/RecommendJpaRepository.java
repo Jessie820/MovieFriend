@@ -11,6 +11,8 @@ public interface RecommendJpaRepository extends JpaRepository<Recommendation, Lo
 
     Page<Recommendation> findAllByMember(Member member, Pageable pageable);
 
+    Page<Recommendation> findByIdLessThanAndMemberOrderByIdDesc(Long lastRecommendationId, Member member, Pageable pageable);
+
     Page<Recommendation> findByRecipientEmail(String email, Pageable pageable);
 
     //Slice<Recommendation> findAllByMember(Member member);

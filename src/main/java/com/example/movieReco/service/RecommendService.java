@@ -4,8 +4,11 @@ import com.example.movieReco.domain.Member;
 import com.example.movieReco.domain.Recommendation;
 import com.example.movieReco.mapper.RecoSaved;
 import com.example.movieReco.repository.MemberRepository;
+import com.example.movieReco.repository.RecommendJpaRepository;
 import com.example.movieReco.repository.RecommendRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +20,7 @@ import java.util.List;
 public class RecommendService {
 
     private final RecommendRepository recommendRepository;
+    private final RecommendJpaRepository recommendJpaRepository;
     private final MemberRepository memberRepository;
 
     public Long save(Member member, Recommendation recommendation){
@@ -62,6 +66,14 @@ public class RecommendService {
     public Recommendation findRecommendation(Long id){
         return recommendRepository.findRecommendation(id);
     }
+
+//    public List<Recommendation> findMyRecommendations(int no, Member member){
+//        PageRequest pageRequest = PageRequest.of(no,5);
+//        Page<Recommendation> page= recommendJpaRepository.findAllByMember(member, pageRequest);
+//
+//        List<Recommendation> recommendations = page.getContent();
+//        return recommendations;
+//    }
 
     public List<Recommendation> findMyRecommendations(Member member){
         return recommendRepository.findRecommendationsByMember(member);
